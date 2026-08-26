@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -56,7 +56,7 @@ export default function TrackingDetailsPage() {
   const [error, setError] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const fetchParcelDetails = async () => {
+  const fetchParcelDetails = useCallback(async () => {
     if (!trackingNumber) return;
     setLoading(true);
     setError('');
@@ -73,7 +73,7 @@ export default function TrackingDetailsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [trackingNumber]);
 
   useEffect(() => {
     fetchParcelDetails();
@@ -94,7 +94,7 @@ export default function TrackingDetailsPage() {
     return () => {
       socket.off('tracking_update', handleTrackingUpdate);
     };
-  }, [trackingNumber]);
+  }, [trackingNumber, fetchParcelDetails]);
 
   // Helper for event status icon
   const getEventIcon = (statusStr: string, isLatest: boolean) => {

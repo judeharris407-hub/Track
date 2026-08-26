@@ -49,10 +49,10 @@ export default function PublicLandingPage() {
           {/* Left Column: Heading & CTA */}
           <div className="lg:col-span-7 space-y-6 text-left">
             <h1 className="text-3xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-              Looking for a trusted courier service that's quick, affordable, and dependable?
+              Looking for a trusted courier service that&apos;s quick, affordable, and dependable?
             </h1>
             <p className="text-blue-100 text-base sm:text-lg font-normal max-w-xl">
-              Whether it's a small package, urgent document, or bulk shipment
+              Whether it&apos;s a small package, urgent document, or bulk shipment
             </p>
             <div className="pt-2">
               <a
@@ -175,7 +175,7 @@ export default function PublicLandingPage() {
             <div>
               <h3 className="text-lg font-bold text-slate-900 mb-1.5">Business & Personal Deliveries</h3>
               <p className="text-slate-600 text-sm leading-relaxed">
-                Whether you're sending documents, parcels, or bulk shipments, we've got you covered.
+                Whether you&apos;re sending documents, parcels, or bulk shipments, we&apos;ve got you covered.
               </p>
             </div>
           </div>
@@ -360,7 +360,7 @@ export default function PublicLandingPage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900">View Real-Time Status</h3>
               <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-xs mx-auto">
-                Access detailed tracking information with live updates on your shipment's current location.
+                Access detailed tracking information with live updates on your shipment&apos;s current location.
               </p>
             </div>
 
@@ -395,7 +395,7 @@ export default function PublicLandingPage() {
                   ))}
                 </div>
                 <p className="text-slate-700 text-sm leading-relaxed italic">
-                  "Excellent tracking service! I can always see exactly where my packages are. The real-time updates are incredibly accurate."
+                  &ldquo;Excellent tracking service! I can always see exactly where my packages are. The real-time updates are incredibly accurate.&rdquo;
                 </p>
               </div>
               <div>
@@ -413,7 +413,7 @@ export default function PublicLandingPage() {
                   ))}
                 </div>
                 <p className="text-slate-700 text-sm leading-relaxed italic">
-                  "The vehicle tracking feature has transformed our fleet management. We've improved delivery times by 30%."
+                  &ldquo;The vehicle tracking feature has transformed our fleet management. We&apos;ve improved delivery times by 30%.&rdquo;
                 </p>
               </div>
               <div>
@@ -431,7 +431,7 @@ export default function PublicLandingPage() {
                   ))}
                 </div>
                 <p className="text-slate-700 text-sm leading-relaxed italic">
-                  "Simple, reliable, and professional. The notifications keep me informed without being overwhelming. Highly recommend!"
+                  &ldquo;Simple, reliable, and professional. The notifications keep me informed without being overwhelming. Highly recommend!&rdquo;
                 </p>
               </div>
               <div>

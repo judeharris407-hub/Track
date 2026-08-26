@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import {
   MessageSquare,
@@ -55,7 +55,7 @@ export default function AdminLiveChatDeskPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Fetch threads list
-  const fetchThreads = async () => {
+  const fetchThreads = useCallback(async () => {
     setLoadingThreads(true);
     try {
       const response = await api.get(`/admin/chat/threads?status=${statusFilter === 'ALL' ? '' : statusFilter}`);
@@ -71,11 +71,11 @@ export default function AdminLiveChatDeskPage() {
     } finally {
       setLoadingThreads(false);
     }
-  };
+  }, [statusFilter, selectedThread]);
 
   useEffect(() => {
     fetchThreads();
-  }, [statusFilter]);
+  }, [fetchThreads]);
 
   // Select a thread and join via Socket.IO
   const selectThread = async (thread: ChatThread) => {
