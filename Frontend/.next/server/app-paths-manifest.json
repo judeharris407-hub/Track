@@ -1,8 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/(admin)/admin/chat/page": "app/(admin)/admin/chat/page.js",
-  "/(public)/page": "app/(public)/page.js",
-  "/(admin)/admin/dashboard/page": "app/(admin)/admin/dashboard/page.js",
-  "/(admin)/admin/login/page": "app/(admin)/admin/login/page.js",
-  "/(public)/track/[trackingNumber]/page": "app/(public)/track/[trackingNumber]/page.js"
-}
