@@ -5,13 +5,29 @@ dotenv.config();
 
 const { Pool } = pg;
 
-const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'parcel_tracker',
-  password: process.env.DB_PASSWORD,
-  port: parseInt(process.env.DB_PORT || '5432', 10),
-});
+const isProduction = process.env.NODE_ENV === 'production';
+const databaseUrl = process.env.DATABASE_URL;
+
+// SSL configuration for cloud databases (Neon, Supabase, etc.) and production environments
+const ssl = isProduction || (databaseUrl && (databaseUrl.includes('sslmode=require') || databaseUrl.includes('neon.tech') || databaseUrl.includes('supabase')))
+  ? { rejectUnauthorized: false }
+  : (process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false);
+
+const poolConfig = databaseUrl
+  ? {
+      connectionString: databaseUrl,
+      ...(ssl ? { ssl } : {}),
+    }
+  : {
+      user: process.env.DB_USER || 'postgres',
+      host: process.env.DB_HOST || 'localhost',
+      database: process.env.DB_NAME || 'parcel_tracker',
+      password: process.env.DB_PASSWORD,
+      port: parseInt(process.env.DB_PORT || '5432', 10),
+      ...(ssl ? { ssl } : {}),
+    };
+
+const pool = new Pool(poolConfig);
 
 // Connection event listeners
 pool.on('connect', () => {
