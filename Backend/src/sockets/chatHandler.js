@@ -114,10 +114,30 @@ export const registerChatHandlers = (io, socket) => {
   socket.on('send_message', async (payload, callback) => {
     try {
       const data = typeof payload === 'string' ? JSON.parse(payload) : (payload || {});
-      const { threadId, senderType = 'guest', message } = data;
+      let { threadId, guestId, trackingNumber, channel, externalContactId, senderType = 'guest', message } = data;
 
-      if (!threadId || !message || !message.trim()) {
-        const errorResponse = { success: false, error: 'threadId and message are required' };
+      if (!message || !message.trim()) {
+        const errorResponse = { success: false, error: 'message is required' };
+        socket.emit('error_message', errorResponse);
+        if (typeof callback === 'function') callback(errorResponse);
+        return;
+      }
+
+      // If threadId is not provided, resolve or create thread using guestId
+      if (!threadId && guestId) {
+        const thread = await findOrCreateThread(
+          guestId,
+          trackingNumber,
+          channel || 'web',
+          externalContactId || null
+        );
+        threadId = thread.id;
+        const room = `thread_${threadId}`;
+        socket.join(room);
+      }
+
+      if (!threadId) {
+        const errorResponse = { success: false, error: 'threadId or guestId is required' };
         socket.emit('error_message', errorResponse);
         if (typeof callback === 'function') callback(errorResponse);
         return;

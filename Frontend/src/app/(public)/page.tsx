@@ -18,6 +18,9 @@ import {
   ArrowRight,
   CheckCircle2,
   Boxes,
+  SendHorizontal,
+  MessageSquare,
+  ExternalLink,
 } from 'lucide-react';
 
 export default function PublicLandingPage() {
@@ -443,50 +446,99 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 7. CONTACT WITH US PROFESSIONALS */}
+      {/* 7. MULTI-CHANNEL CUSTOMER SUPPORT SECTION */}
       <section id="contact" className="bg-[#1D4ED8] text-white py-20 px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-extrabold mb-3">
-            Contact with us professionals
+            24/7 Multi-Channel Support
           </h2>
           <p className="text-blue-100 text-sm max-w-xl mx-auto mb-14">
-            Have questions about our tracking services? Our team is here to help you 24/7.
+            Connect instantly with our dedicated support agents via Live Web Chat, official WhatsApp, Telegram bot, or phone.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-4xl mx-auto mb-12">
-            {/* Phone */}
-            <div className="space-y-3">
-              <div className="w-14 h-14 rounded-full bg-white text-blue-600 flex items-center justify-center mx-auto shadow-md">
-                <Phone className="w-6 h-6" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
+            {/* 1. Live Web Chat */}
+            <div className="bg-blue-800/60 border border-blue-400/30 p-6 rounded-3xl backdrop-blur-md flex flex-col justify-between space-y-4 hover:scale-105 transition-transform shadow-xl">
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-full bg-white text-blue-600 flex items-center justify-center mx-auto shadow-md">
+                  <MessageSquare className="w-6 h-6" />
+                </div>
+                <h4 className="text-sm font-bold">Live Web Chat</h4>
+                <p className="text-blue-100 text-xs">Instant in-browser chat with support agents.</p>
               </div>
-              <h4 className="text-sm font-bold">Phone</h4>
-              <p className="text-blue-100 text-xs font-mono">+1 (555) 123-4567</p>
+              <span className="text-[11px] font-semibold text-emerald-300 flex items-center justify-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Available 24/7
+              </span>
             </div>
 
-            {/* Email */}
-            <div className="space-y-3">
-              <div className="w-14 h-14 rounded-full bg-white text-blue-600 flex items-center justify-center mx-auto shadow-md">
-                <Mail className="w-6 h-6" />
+            {/* 2. WhatsApp Support */}
+            <a
+              href="https://wa.me/14155238886?text=Hello%20ShipNGo%20Support,%20I%20need%20assistance%20with%20my%20shipment."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-emerald-800/50 border border-emerald-400/40 p-6 rounded-3xl backdrop-blur-md flex flex-col justify-between space-y-4 hover:scale-105 transition-transform shadow-xl group text-white"
+            >
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto shadow-md">
+                  <Phone className="w-6 h-6" />
+                </div>
+                <h4 className="text-sm font-bold flex items-center justify-center gap-1">
+                  WhatsApp Support
+                  <ExternalLink className="w-3 h-3 opacity-70 group-hover:opacity-100" />
+                </h4>
+                <p className="text-emerald-100 text-xs font-mono">+1 (415) 523-8886</p>
               </div>
-              <h4 className="text-sm font-bold">Email</h4>
-              <p className="text-blue-100 text-xs font-mono">support@shipngo.com</p>
-            </div>
+              <span className="text-[11px] font-bold text-emerald-300 group-hover:underline">
+                Open WhatsApp &rarr;
+              </span>
+            </a>
 
-            {/* Address */}
-            <div className="space-y-3">
-              <div className="w-14 h-14 rounded-full bg-white text-blue-600 flex items-center justify-center mx-auto shadow-md">
-                <MapPin className="w-6 h-6" />
+            {/* 3. Telegram Bot */}
+            <a
+              href="https://t.me/ShipNGoSupportBot?start=support"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-sky-800/50 border border-sky-400/40 p-6 rounded-3xl backdrop-blur-md flex flex-col justify-between space-y-4 hover:scale-105 transition-transform shadow-xl group text-white"
+            >
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-full bg-sky-500 text-white flex items-center justify-center mx-auto shadow-md">
+                  <SendHorizontal className="w-6 h-6 ml-0.5" />
+                </div>
+                <h4 className="text-sm font-bold flex items-center justify-center gap-1">
+                  Telegram Bot
+                  <ExternalLink className="w-3 h-3 opacity-70 group-hover:opacity-100" />
+                </h4>
+                <p className="text-sky-100 text-xs font-mono">@ShipNGoSupportBot</p>
               </div>
-              <h4 className="text-sm font-bold">Address</h4>
-              <p className="text-blue-100 text-xs">123 Shipping Lane, NY 10001</p>
-            </div>
+              <span className="text-[11px] font-bold text-sky-200 group-hover:underline">
+                Open Telegram &rarr;
+              </span>
+            </a>
+
+            {/* 4. Email Support */}
+            <a
+              href="mailto:support@shipngo.com"
+              className="bg-blue-800/60 border border-blue-400/30 p-6 rounded-3xl backdrop-blur-md flex flex-col justify-between space-y-4 hover:scale-105 transition-transform shadow-xl group text-white"
+            >
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-full bg-white text-blue-600 flex items-center justify-center mx-auto shadow-md">
+                  <Mail className="w-6 h-6" />
+                </div>
+                <h4 className="text-sm font-bold">Email Support</h4>
+                <p className="text-blue-100 text-xs font-mono">support@shipngo.com</p>
+              </div>
+              <span className="text-[11px] font-bold text-blue-200 group-hover:underline">
+                Send Email &rarr;
+              </span>
+            </a>
           </div>
 
           <a
             href="#track"
-            className="inline-block px-9 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-blue-600 font-bold text-sm shadow-xl transition-all hover:scale-105 active:scale-95"
+            className="inline-block px-9 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-blue-600 font-bold text-sm shadow-xl transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
-            Send Package
+            Track Your Package
           </a>
         </div>
       </section>
