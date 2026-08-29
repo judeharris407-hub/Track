@@ -165,6 +165,10 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
     setInputMessage('');
     setIsSending(true);
 
+    if (!socket.connected) {
+      socket.connect();
+    }
+
     // Emit send_message with threadId, guestId, and trackingNumber for robust backend fallback
     socket.emit(
       'send_message',
@@ -178,15 +182,23 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
       },
       (res: { success: boolean; data?: ChatMessage; error?: string }) => {
         setIsSending(false);
-        if (res?.success && res.data) {
-          setMessages((prev) =>
-            prev.map((m) => (m.id === optimisticMsg.id ? { ...res.data!, isPending: false } : m))
-          );
-        }
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === optimisticMsg.id
+              ? { ...(res?.data || m), isPending: false }
+              : m
+          )
+        );
       }
     );
 
-    setTimeout(() => setIsSending(false), 2000);
+    // Fallback timer to remove sending indicator after network delay
+    setTimeout(() => {
+      setIsSending(false);
+      setMessages((prev) =>
+        prev.map((m) => (m.id === optimisticMsg.id ? { ...m, isPending: false } : m))
+      );
+    }, 1500);
   };
 
   return (

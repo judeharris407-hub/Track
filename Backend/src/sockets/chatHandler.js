@@ -180,9 +180,11 @@ export const registerChatHandlers = (io, socket) => {
       );
 
       const room = `thread_${numThreadId}`;
+      socket.join(room);
 
       // Broadcast receive_message to all clients in the thread room
       io.to(room).emit('receive_message', savedMessage);
+      socket.emit('receive_message', savedMessage);
       console.log(`[Socket] Message broadcasted to ${room} by ${normalizedSenderType}: ${savedMessage.id}`);
 
       // Notify global admin dashboard of chat activity
