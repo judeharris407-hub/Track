@@ -14,10 +14,13 @@ const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
 // Create HTTP server
 const server = http.createServer(app);
 
-// Integrate Socket.IO with permissive CORS settings and transports
+// Integrate Socket.IO with permissive CORS dynamic origin reflection and transports
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: (origin, callback) => {
+      // Dynamic origin reflection allows credentials: true without wildcard CORS browser rejection
+      callback(null, true);
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   },

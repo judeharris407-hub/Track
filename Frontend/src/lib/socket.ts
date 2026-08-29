@@ -5,7 +5,7 @@ const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || 'https://shipngo-api.on
 export const socket: Socket = io(SOCKET_URL, {
   autoConnect: true,
   transports: ['websocket', 'polling'],
-  withCredentials: true,
+  withCredentials: false,
 });
 
 export const getSocket = (): Socket => socket;
