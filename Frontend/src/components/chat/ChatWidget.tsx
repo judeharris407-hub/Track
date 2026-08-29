@@ -74,6 +74,10 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
 
   // Track socket connection status and attach listeners
   useEffect(() => {
+    const syncStatus = () => {
+      setIsConnected(Boolean(socket && socket.connected));
+    };
+
     const onConnect = () => {
       console.log('[Socket] Connected to backend successfully. ID:', socket.id);
       setIsConnected(true);
@@ -116,12 +120,16 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
     socket.on('thread_history', handleThreadHistory);
     socket.on('receive_message', handleReceiveMessage);
 
+    syncStatus();
+    const statusInterval = setInterval(syncStatus, 1000);
+
     if (socket.connected) {
       setIsConnected(true);
       joinChatThread();
     }
 
     return () => {
+      clearInterval(statusInterval);
       socket.off('connect', onConnect);
       socket.off('connect_error', onConnectError);
       socket.off('disconnect', onDisconnect);
