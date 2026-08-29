@@ -97,7 +97,7 @@ export default function AdminLiveChatDeskPage() {
     socket.emit('agent_join_thread', { threadId: thread.id });
   };
 
-  // Socket listener for real-time messages
+  // Socket listener for real-time messages and automatic thread list refresh
   useEffect(() => {
     const handleReceiveMessage = (msg: ChatMessage) => {
       // If message belongs to currently open thread, append it
@@ -108,9 +108,14 @@ export default function AdminLiveChatDeskPage() {
         });
       }
 
-      // Update last message preview in threads list
-      setThreads((prev) =>
-        prev.map((t) =>
+      // Check if thread exists in current list; if not, re-fetch all threads
+      setThreads((prev) => {
+        const threadExists = prev.some((t) => t.id === msg.thread_id);
+        if (!threadExists) {
+          fetchThreads();
+          return prev;
+        }
+        return prev.map((t) =>
           t.id === msg.thread_id
             ? {
                 ...t,
@@ -120,14 +125,18 @@ export default function AdminLiveChatDeskPage() {
                 updated_at: msg.created_at,
               }
             : t
-        )
-      );
+        );
+      });
     };
 
     const handleThreadUpdated = (updatedThread: ChatThread) => {
-      setThreads((prev) =>
-        prev.map((t) => (t.id === updatedThread.id ? { ...t, ...updatedThread } : t))
-      );
+      setThreads((prev) => {
+        const threadExists = prev.some((t) => t.id === updatedThread.id);
+        if (!threadExists) {
+          return [updatedThread, ...prev];
+        }
+        return prev.map((t) => (t.id === updatedThread.id ? { ...t, ...updatedThread } : t));
+      });
       if (selectedThread && selectedThread.id === updatedThread.id) {
         setSelectedThread((prev) => (prev ? { ...prev, ...updatedThread } : null));
       }
@@ -136,11 +145,17 @@ export default function AdminLiveChatDeskPage() {
     socket.on('receive_message', handleReceiveMessage);
     socket.on('admin_thread_updated', handleThreadUpdated);
 
+    // Periodic safety poll every 8 seconds for active admin desk
+    const pollInterval = setInterval(() => {
+      fetchThreads();
+    }, 8000);
+
     return () => {
+      clearInterval(pollInterval);
       socket.off('receive_message', handleReceiveMessage);
       socket.off('admin_thread_updated', handleThreadUpdated);
     };
-  }, [selectedThread]);
+  }, [selectedThread, fetchThreads]);
 
   // Scroll messages to bottom on updates
   useEffect(() => {
