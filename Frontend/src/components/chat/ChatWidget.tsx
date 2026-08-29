@@ -43,6 +43,29 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
     setGuestId(id);
   }, []);
 
+  // Track socket connection status
+  useEffect(() => {
+    const onConnect = () => {
+      console.log('[Socket] Connected to backend successfully. ID:', socket.id);
+    };
+    const onConnectError = (error: Error) => {
+      console.error('[Socket] Connection error:', error.message || error);
+    };
+    const onDisconnect = (reason: string) => {
+      console.warn('[Socket] Disconnected from server. Reason:', reason);
+    };
+
+    socket.on('connect', onConnect);
+    socket.on('connect_error', onConnectError);
+    socket.on('disconnect', onDisconnect);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('connect_error', onConnectError);
+      socket.off('disconnect', onDisconnect);
+    };
+  }, []);
+
   // Connect socket and join thread when opened or when guestId/trackingNumber change
   useEffect(() => {
     if (!guestId) return;

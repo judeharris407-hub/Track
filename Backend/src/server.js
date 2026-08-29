@@ -14,15 +14,14 @@ const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
 // Create HTTP server
 const server = http.createServer(app);
 
-// Integrate Socket.IO with CORS settings
+// Integrate Socket.IO with permissive CORS settings and transports
 const io = new Server(server, {
   cors: {
-    origin: (origin, callback) => {
-      callback(null, true);
-    },
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   },
+  transports: ['websocket', 'polling'],
 });
 
 // Attach Socket.IO to express app so routes can emit events if needed

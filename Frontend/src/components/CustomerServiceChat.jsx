@@ -1,15 +1,49 @@
 import React, { useState, useRef, useEffect } from 'react';
+import socket from '../lib/socket';
 
 const CustomerServiceChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [hasOpened, setHasOpened] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [isConnected, setIsConnected] = useState(socket.connected);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  // Socket connection listeners for status and debugging
+  useEffect(() => {
+    const handleConnect = () => {
+      console.log('[Socket] Connected to backend successfully. Socket ID:', socket.id);
+      setIsConnected(true);
+    };
+
+    const handleConnectError = (error) => {
+      console.error('[Socket] Connection error:', error.message || error);
+      setIsConnected(false);
+    };
+
+    const handleDisconnect = (reason) => {
+      console.warn('[Socket] Disconnected from server. Reason:', reason);
+      setIsConnected(false);
+    };
+
+    socket.on('connect', handleConnect);
+    socket.on('connect_error', handleConnectError);
+    socket.on('disconnect', handleDisconnect);
+
+    if (socket.connected) {
+      setIsConnected(true);
+    }
+
+    return () => {
+      socket.off('connect', handleConnect);
+      socket.off('connect_error', handleConnectError);
+      socket.off('disconnect', handleDisconnect);
+    };
+  }, []);
 
   useEffect(() => {
     if (isOpen && !hasOpened) {
@@ -62,7 +96,10 @@ const CustomerServiceChat = () => {
               </div>
               <div>
                 <h3 className="font-bold text-sm">SkyPrime Virtual Assistant</h3>
-                <p className="text-xs text-blue-200">Usually replies instantly</p>
+                <p className="text-xs text-blue-200 flex items-center gap-1.5">
+                  <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+                  {isConnected ? 'Connected' : 'Connecting...'}
+                </p>
               </div>
             </div>
             <button 
