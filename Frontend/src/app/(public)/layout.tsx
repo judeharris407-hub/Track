@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { Package, ShieldAlert, ChevronRight } from 'lucide-react';
-import ChatWidget from '@/components/chat/ChatWidget';
+import { Package, ShieldAlert } from 'lucide-react';
 
 export default function PublicLayout({
   children,
@@ -59,9 +58,6 @@ export default function PublicLayout({
 
       {/* Main Public Body */}
       <main className="flex-1">{children}</main>
-
-      {/* Reusable Live Support Chat Widget */}
-      <ChatWidget />
     </div>
   );
 }

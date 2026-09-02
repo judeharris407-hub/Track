@@ -22,7 +22,6 @@ import {
 } from 'lucide-react';
 import api from '@/lib/api';
 import socket from '@/lib/socket';
-import ChatWidget from '@/components/chat/ChatWidget';
 
 interface ParcelEvent {
   id: number;
@@ -387,9 +386,6 @@ export default function TrackingDetailsPage() {
           </div>
         </div>
       ) : null}
-
-      {/* Embedded Live Chat Widget Bound to Current Tracking ID */}
-      <ChatWidget trackingNumber={trackingNumber} defaultOpen={isChatOpen} />
     </div>
   );
 }

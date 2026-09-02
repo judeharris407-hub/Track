@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import TawkChat from '@/components/TawkChat';
 
 export const metadata: Metadata = {
   title: 'ShipNGo | Trusted Courier & Real-Time Tracking Logistics',
@@ -15,6 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased min-h-screen bg-white text-slate-900 selection:bg-blue-500 selection:text-white">
         {children}
+        <TawkChat />
       </body>
     </html>
   );
