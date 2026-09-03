@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import api from '@/lib/api';
 import socket from '@/lib/socket';
+import TawkChat from '@/components/TawkChat';
 
 interface ParcelEvent {
   id: number;
@@ -224,8 +225,12 @@ export default function TrackingDetailsPage() {
                 </div>
 
                 <button
-                  onClick={() => setIsChatOpen(true)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/25 transition-all hover:scale-105"
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && (window as any).Tawk_API?.maximize) {
+                      (window as any).Tawk_API.maximize();
+                    }
+                  }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/25 transition-all hover:scale-105 cursor-pointer"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                   <span>Ask Live Agent</span>
@@ -386,6 +391,12 @@ export default function TrackingDetailsPage() {
           </div>
         </div>
       ) : null}
+
+      {/* Synchronize Tawk.to Live Chat with Current Parcel Details */}
+      <TawkChat
+        trackingNumber={parcel?.tracking_number || trackingNumber}
+        customerName={parcel?.recipient_name}
+      />
     </div>
   );
 }
