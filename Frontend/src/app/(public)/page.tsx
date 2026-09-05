@@ -6,31 +6,20 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   Search,
-  Package,
   Truck,
-  Bell,
-  Globe,
-  ShieldCheck,
   Zap,
-  Star,
   Phone,
   Mail,
-  MapPin,
   ArrowRight,
   CheckCircle2,
-  Boxes,
   SendHorizontal,
   MessageSquare,
   ExternalLink,
   ChevronRight,
-  Clock,
-  Navigation,
-  Building,
   Plane,
   Ship,
-  Layers,
-  Cpu,
-  Shield,
+  ShieldCheck,
+  Building,
 } from 'lucide-react';
 
 export default function PublicLandingPage() {
@@ -62,41 +51,41 @@ export default function PublicLandingPage() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-600 selection:text-white">
-      {/* 1. HERO SECTION (Deep Blue with Delivery Van Image & Overlaid Tracking Card) */}
-      <section className="bg-[#1E40AF] text-white pt-14 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Subtle radial glow */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
+      {/* 1. HERO SECTION (Primary Brand Blue with Clean Delivery Van Image) */}
+      <section className="bg-[#1D4ED8] text-white pt-14 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Subtle radial light glow */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Column: Headline & Action Buttons */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/25 border border-blue-400/30 text-blue-100 text-xs font-semibold backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 border border-white/25 text-white text-xs font-semibold backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-cyan-300 animate-pulse" />
               Autonomous Enterprise Freight & Logistics
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12]">
               Move what matters, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-blue-200">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-blue-100">
                 on time, every time.
               </span>
             </h1>
 
-            <p className="text-blue-100 text-sm sm:text-base leading-relaxed max-w-xl font-normal">
+            <p className="text-blue-50 text-sm sm:text-base leading-relaxed max-w-xl font-normal">
               Precision line-haul courier services, real-time GPS telemetry, and automated milestone verification engineered to keep your supply chain moving seamlessly.
             </p>
 
             <div className="flex flex-wrap items-center gap-3.5 pt-2">
               <a
                 href="#track-box"
-                className="px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-xl shadow-blue-900/40 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                className="px-7 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-xl shadow-blue-900/30 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
               >
                 <span>Track a Shipment</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
               <Link
                 href="/services"
-                className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/25 transition-all"
+                className="px-6 py-3.5 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-semibold text-xs border border-white/20 transition-all"
               >
                 Explore Services
               </Link>
@@ -119,55 +108,27 @@ export default function PublicLandingPage() {
             </div>
           </div>
 
-          {/* Right Column: Rounded Image Card with Delivery Van & Overlaid Floating Badge */}
+          {/* Right Column: Clean Image Card with Delivery Van (No Overlay Cards or Badges) */}
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden border border-blue-400/30 shadow-2xl group bg-slate-900">
+            <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl group bg-blue-900">
               <div className="relative h-72 sm:h-80 w-full overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000"
-                  alt="Delivery van on highway logistics"
+                  src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1000"
+                  alt="Modern delivery van on highway"
                   width={1000}
                   height={800}
                   unoptimized
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-              </div>
-
-              {/* Overlaid Floating "IN TRANSIT" Live Tracking Badge Card */}
-              <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-slate-950/90 border border-blue-400/40 backdrop-blur-xl text-left shadow-2xl space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[11px] font-bold text-cyan-300 font-mono">
-                      IN TRANSIT: Live Tracking Active
-                    </span>
-                  </div>
-                  <span className="px-2 py-0.5 rounded-full bg-blue-600/30 text-blue-200 text-[10px] font-bold font-mono border border-blue-400/30">
-                    SHP-001234
-                  </span>
-                </div>
-
-                <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-blue-500 via-cyan-400 to-emerald-400 h-full w-3/4 rounded-full" />
-                </div>
-
-                <div className="flex items-center justify-between text-[11px] text-slate-300">
-                  <span className="flex items-center gap-1 font-mono">
-                    <MapPin className="w-3.5 h-3.5 text-blue-400" />
-                    JFK Air Hub &rarr; London Hub
-                  </span>
-                  <span className="text-cyan-300 font-semibold font-mono">ETA: 04:30 PM</span>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. FEATURE TICKER BAR */}
-      <section className="py-4 bg-slate-900 text-slate-400 border-b border-slate-800 text-xs font-bold uppercase tracking-widest overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-80">
+      {/* 2. FEATURE TICKER BAR (Brand Blue Contrast Bar) */}
+      <section className="py-4 bg-[#1E40AF] text-blue-100 border-b border-blue-600/60 text-xs font-bold uppercase tracking-widest overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-90">
           <span>PARCEL</span>
           <span>•</span>
           <span>FREIGHT</span>
@@ -235,7 +196,7 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 4. "SERVICES BUILT AROUND YOUR DELIVERY PROMISE" GRID */}
+      {/* 4. "SERVICES BUILT AROUND YOUR DELIVERY PROMISE" GRID (Clean White & Slate Backgrounds) */}
       <section id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
@@ -257,9 +218,9 @@ export default function PublicLandingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: Express Delivery */}
-          <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
+          <div className="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Zap className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-bold text-slate-900">Express Delivery</h3>
@@ -273,9 +234,9 @@ export default function PublicLandingPage() {
           </div>
 
           {/* Card 2: Last-Mile */}
-          <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
+          <div className="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Truck className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-bold text-slate-900">Last-Mile Distribution</h3>
@@ -289,9 +250,9 @@ export default function PublicLandingPage() {
           </div>
 
           {/* Card 3: Air & Sea Freight */}
-          <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
+          <div className="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Plane className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-bold text-slate-900">Air Freight</h3>
@@ -305,9 +266,9 @@ export default function PublicLandingPage() {
           </div>
 
           {/* Card 4: Ocean Cargo */}
-          <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
+          <div className="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Ship className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-bold text-slate-900">Sea Freight</h3>
@@ -321,9 +282,9 @@ export default function PublicLandingPage() {
           </div>
 
           {/* Card 5: Customs */}
-          <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
+          <div className="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-bold text-slate-900">Customs Clearance</h3>
@@ -337,9 +298,9 @@ export default function PublicLandingPage() {
           </div>
 
           {/* Card 6: Warehousing */}
-          <div className="p-7 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
+          <div className="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between group">
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Building className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-bold text-slate-900">Warehousing & Fulfillment</h3>
@@ -354,28 +315,21 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 5. "TECHNOLOGY & LOGISTICS" SECTION (Dark Navy Contrast Band) */}
-      <section className="bg-[#0B132B] text-white py-20 px-4 sm:px-6 lg:px-8 text-left border-y border-slate-800">
+      {/* 5. "TECHNOLOGY & LOGISTICS" SECTION (Brand Blue Background) */}
+      <section className="bg-[#1D4ED8] text-white py-20 px-4 sm:px-6 lg:px-8 text-left border-y border-blue-600">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Image of Warehouse Worker Holding Tablet */}
+          {/* Left Column: Real Logistics Warehouse Interior (No Overlay Badges) */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900 group">
+            <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-blue-950 group">
               <div className="relative h-80 sm:h-96 w-full">
                 <Image
-                  src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1000"
-                  alt="Warehouse operator with digital telemetry tablet"
+                  src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000"
+                  alt="Modern logistics warehouse interior with organized staging"
                   width={1000}
                   height={800}
                   unoptimized
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
-              </div>
-
-              {/* Overlaid Badge */}
-              <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 backdrop-blur-md">
-                <span className="text-xs font-bold text-cyan-300 block">Warehouse Telemetry Node</span>
-                <span className="text-[11px] text-slate-400">Automated barcode pallet staging and live dispatch.</span>
               </div>
             </div>
           </div>
@@ -383,55 +337,55 @@ export default function PublicLandingPage() {
           {/* Right Column: "A logistics partner that behaves like technology" & 2x2 Feature Grid */}
           <div className="lg:col-span-7 space-y-6">
             <div className="space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-cyan-200">
                 Technology-First Freight
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
                 A logistics partner that behaves like technology.
               </h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
+              <p className="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-xl">
                 We replace traditional friction-heavy freight brokers with automated dispatch algorithms, transparent GPS telemetry, and instant API integrations.
               </p>
             </div>
 
             {/* 2x2 Feature Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="p-5 rounded-2xl bg-[#131F37] border border-slate-800 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-xs">
+              <div className="p-5 rounded-2xl bg-blue-800/60 border border-blue-400/30 backdrop-blur-sm space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-white/20 text-white flex items-center justify-center font-bold text-xs">
                   01
                 </div>
                 <h4 className="text-sm font-bold text-white">Fast</h4>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-blue-100 leading-relaxed">
                   Automated dispatch algorithms match shipments to the nearest vehicle in seconds, cutting dwell time.
                 </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-[#131F37] border border-slate-800 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-emerald-600/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+              <div className="p-5 rounded-2xl bg-blue-800/60 border border-blue-400/30 backdrop-blur-sm space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-emerald-400/30 text-emerald-200 flex items-center justify-center font-bold text-xs">
                   02
                 </div>
                 <h4 className="text-sm font-bold text-white">Reliable</h4>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-blue-100 leading-relaxed">
                   99.8% on-time delivery track record with end-to-end cargo insurance and verified signatures.
                 </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-[#131F37] border border-slate-800 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-cyan-600/20 text-cyan-400 flex items-center justify-center font-bold text-xs">
+              <div className="p-5 rounded-2xl bg-blue-800/60 border border-blue-400/30 backdrop-blur-sm space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-cyan-400/30 text-cyan-200 flex items-center justify-center font-bold text-xs">
                   03
                 </div>
                 <h4 className="text-sm font-bold text-white">Connected</h4>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-blue-100 leading-relaxed">
                   Seamless GPS telemetry updates and instant WhatsApp/SMS milestone alert triggers.
                 </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-[#131F37] border border-slate-800 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold text-xs">
+              <div className="p-5 rounded-2xl bg-blue-800/60 border border-blue-400/30 backdrop-blur-sm space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-indigo-400/30 text-indigo-200 flex items-center justify-center font-bold text-xs">
                   04
                 </div>
                 <h4 className="text-sm font-bold text-white">Scalable</h4>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-blue-100 leading-relaxed">
                   Built to handle seasonal spikes effortlessly from 10 parcels to 50,000+ freight units.
                 </p>
               </div>
@@ -453,7 +407,7 @@ export default function PublicLandingPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
               <span className="text-3xl font-black text-blue-600 font-mono block">01</span>
               <h3 className="text-base font-bold text-slate-900">Book</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -461,7 +415,7 @@ export default function PublicLandingPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
               <span className="text-3xl font-black text-blue-600 font-mono block">02</span>
               <h3 className="text-base font-bold text-slate-900">Pickup</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -469,7 +423,7 @@ export default function PublicLandingPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
               <span className="text-3xl font-black text-blue-600 font-mono block">03</span>
               <h3 className="text-base font-bold text-slate-900">Track</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -477,7 +431,7 @@ export default function PublicLandingPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
               <span className="text-3xl font-black text-blue-600 font-mono block">04</span>
               <h3 className="text-base font-bold text-slate-900">Delivered</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -488,35 +442,36 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 7. "HUBS, FLEETS & PEOPLE" BANNER (Background Image Overlay Section) */}
+      {/* 7. "HUBS, FLEETS & PEOPLE" BANNER (Background Image with Brand Blue Gradient Overlay) */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 text-center text-white overflow-hidden">
-        {/* Background Image with Dark Navy Overlay */}
+        {/* Background Image with Primary Brand Blue Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1200"
-            alt="Container terminal port at night"
+            src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1600"
+            alt="Container terminal cargo port operations"
             fill
             unoptimized
-            className="object-cover opacity-25"
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#0B132B]/90" />
+          <div className="absolute inset-0 bg-[#1D4ED8]/85 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E40AF] via-[#1D4ED8]/80 to-[#1E40AF]/90" />
         </div>
 
         <div className="max-w-3xl mx-auto space-y-6 relative z-10">
-          <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-blue-900/60 border border-blue-400/30 px-3.5 py-1.5 rounded-full">
+          <span className="text-xs font-bold uppercase tracking-wider text-white bg-white/20 border border-white/30 px-3.5 py-1.5 rounded-full backdrop-blur-md">
             Global Operations Network
           </span>
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
             Hubs, fleets and people, <br />
             working as one system.
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-xl mx-auto">
             From automated customs clearing to door-to-door temperature monitoring, ShipNGo gives you total visibility over every pallet and parcel.
           </p>
           <div className="pt-2">
             <Link
               href="/services"
-              className="inline-block px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-xl shadow-blue-600/30 transition-all hover:scale-105 active:scale-95"
+              className="inline-block px-8 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-xl shadow-blue-900/40 transition-all hover:scale-105 active:scale-95"
             >
               Explore Operations
             </Link>
@@ -566,27 +521,18 @@ export default function PublicLandingPage() {
             </div>
           </div>
 
-          {/* Right Image Card with Overlaid Floating Pill */}
+          {/* Right Image Card: Modern Courier Carrying Delivery Packages (Clean, No Overlay Cards) */}
           <div className="lg:col-span-6 relative">
-            <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl group bg-slate-900">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl group bg-slate-100">
               <div className="relative h-72 sm:h-80 w-full">
                 <Image
                   src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?q=80&w=1000"
-                  alt="Modern fulfillment facility logistics"
+                  alt="Modern fulfillment and package handling"
                   width={1000}
                   height={800}
                   unoptimized
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-              </div>
-
-              {/* Overlaid Floating Status Pill */}
-              <div className="absolute bottom-4 right-4 p-3.5 rounded-2xl bg-white/95 border border-slate-200 shadow-xl backdrop-blur-md flex items-center gap-2.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                <div>
-                  <span className="text-[11px] font-bold text-slate-900 block font-mono">Fulfillment Staging Verified</span>
-                  <span className="text-[10px] text-slate-500">Facility Node Scanned</span>
-                </div>
               </div>
             </div>
           </div>
@@ -610,7 +556,7 @@ export default function PublicLandingPage() {
 
             {/* Route Indicator Tags */}
             <div className="flex flex-wrap items-center gap-2 pt-2">
-              <span className="px-3 py-1 rounded-full bg-slate-900 text-white font-mono text-[11px] font-bold">
+              <span className="px-3 py-1 rounded-full bg-blue-700 text-white font-mono text-[11px] font-bold">
                 Origin
               </span>
               <span className="text-slate-400">&rarr;</span>
@@ -634,13 +580,13 @@ export default function PublicLandingPage() {
             </div>
           </div>
 
-          {/* Right Wide Aerial Image of Cargo Port */}
+          {/* Right Wide Aerial Image of Cargo Port (Clean, No Overlay Cards) */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl group bg-slate-900">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl group bg-slate-100">
               <div className="relative h-72 sm:h-80 w-full">
                 <Image
-                  src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=1000"
-                  alt="Aerial view of illuminated cargo port"
+                  src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1000"
+                  alt="Aerial cargo container ship and port terminal"
                   width={1000}
                   height={800}
                   unoptimized
@@ -652,8 +598,8 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 10. MULTI-CHANNEL SUPPORT SECTION */}
-      <section id="contact" className="bg-[#1E40AF] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
+      {/* 10. MULTI-CHANNEL SUPPORT SECTION (Brand Blue Background) */}
+      <section id="contact" className="bg-[#1D4ED8] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-5xl mx-auto space-y-10">
           <div className="space-y-2">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
@@ -669,7 +615,7 @@ export default function PublicLandingPage() {
             <button
               type="button"
               onClick={openTawkChat}
-              className="bg-blue-800/60 border border-blue-400/30 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg text-left cursor-pointer group"
+              className="bg-blue-800/70 border border-blue-400/30 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg text-left cursor-pointer group"
             >
               <div className="space-y-2">
                 <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-md">
@@ -678,7 +624,7 @@ export default function PublicLandingPage() {
                 <h4 className="text-sm font-bold text-white">Live Web Chat</h4>
                 <p className="text-blue-100 text-[11px]">Instant in-browser chat with agents.</p>
               </div>
-              <span className="text-[11px] font-bold text-emerald-300 flex items-center gap-1 group-hover:underline">
+              <span className="text-[11px] font-bold text-cyan-300 flex items-center gap-1 group-hover:underline">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 Launch Live Chat &rarr;
               </span>
@@ -731,7 +677,7 @@ export default function PublicLandingPage() {
             {/* 4. Email */}
             <a
               href="mailto:support@shipngo.com"
-              className="bg-blue-800/60 border border-blue-400/30 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
+              className="bg-blue-800/70 border border-blue-400/30 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
             >
               <div className="space-y-2">
                 <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-md">
@@ -748,25 +694,25 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 11. "READY TO MOVE?" BOTTOM CALL-TO-ACTION BANNER */}
-      <section className="bg-[#0B132B] text-white py-16 px-4 sm:px-6 lg:px-8 text-center border-t border-slate-800">
+      {/* 11. "READY TO MOVE?" BOTTOM CALL-TO-ACTION BANNER (Brand Blue Background) */}
+      <section className="bg-[#1E40AF] text-white py-16 px-4 sm:px-6 lg:px-8 text-center border-t border-blue-600/60">
         <div className="max-w-3xl mx-auto space-y-5">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Ready to move?
           </h2>
-          <p className="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+          <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
             Get your shipment moving today with live GPS telemetry, dedicated support, and verified delivery.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
             <a
               href="#track-box"
-              className="px-7 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              className="px-7 py-3 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-lg shadow-blue-900/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
             >
               Get Started
             </a>
             <Link
               href="/contact"
-              className="px-7 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-all hover:scale-105"
+              className="px-7 py-3 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-semibold text-xs border border-white/20 transition-all hover:scale-105"
             >
               Contact Support
             </Link>
