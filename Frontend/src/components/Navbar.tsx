@@ -33,13 +33,6 @@ export const Navbar: React.FC = () => {
         {/* Right Actions */}
         <div className="flex items-center gap-3">
           <Link
-            href="/admin/login"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-all border border-transparent hover:border-slate-200"
-          >
-            <ShieldAlert className="w-3.5 h-3.5 text-blue-600" />
-            <span>Admin</span>
-          </Link>
-          <Link
             href="/#track-box"
             className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/25 transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
