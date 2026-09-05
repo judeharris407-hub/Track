@@ -546,13 +546,13 @@ export default function PublicLandingPage() {
             </div>
           </div>
 
-          {/* Right Image Card: Modern Courier Driver & Logistics Operations */}
+          {/* Right Image Card: Modern Multi-Modal Logistics Hub & Freight Operations */}
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl group bg-slate-100">
               <div className="relative h-72 sm:h-80 w-full">
                 <Image
-                  src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1000"
-                  alt="Modern courier logistics specialist handling delivery orders"
+                  src="/cargo-hub.jpg"
+                  alt="Modern multimodal cargo logistics terminal with container freight and air charter"
                   width={1000}
                   height={800}
                   unoptimized

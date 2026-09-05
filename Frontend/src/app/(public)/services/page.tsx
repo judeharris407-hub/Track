@@ -47,7 +47,7 @@ export default function ServicesPage() {
       ],
       icon: Truck,
       badge: 'Fleet Telematics',
-      image: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1000',
+      image: '/cargo-hub.jpg',
     },
     {
       id: 'notifications',
