@@ -51,10 +51,21 @@ export default function PublicLandingPage() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-600 selection:text-white">
-      {/* 1. HERO SECTION (Primary Brand Blue with Clean Delivery Van Image) */}
-      <section className="bg-[#1D4ED8] text-white pt-14 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Subtle radial light glow */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
+      {/* 1. HERO SECTION (Primary Brand Blue with Subtle Logistics Port Background Overlay) */}
+      <section className="relative text-white pt-14 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#1D4ED8]">
+        {/* Background Cargo Port Image with Brand Blue Overlay */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Image
+            src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1600"
+            alt="Cargo port logistics backdrop"
+            fill
+            priority
+            unoptimized
+            className="object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-blue-900/85 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1E40AF]/95 via-[#1D4ED8]/85 to-[#1E40AF]/90" />
+        </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Column: Headline & Action Buttons */}
@@ -78,7 +89,7 @@ export default function PublicLandingPage() {
             <div className="flex flex-wrap items-center gap-3.5 pt-2">
               <a
                 href="#track-box"
-                className="px-7 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-xl shadow-blue-900/30 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                className="px-7 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-xl shadow-blue-950/40 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
               >
                 <span>Track a Shipment</span>
                 <ArrowRight className="w-4 h-4" />
@@ -108,15 +119,16 @@ export default function PublicLandingPage() {
             </div>
           </div>
 
-          {/* Right Column: Clean Image Card with Delivery Van (No Overlay Cards or Badges) */}
+          {/* Right Column: Clean Image Card with Delivery Van */}
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl group bg-blue-900">
+            <div className="relative rounded-2xl overflow-hidden border border-white/25 shadow-2xl group bg-blue-900">
               <div className="relative h-72 sm:h-80 w-full overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?q=80&w=1000"
-                  alt="Modern delivery van on highway"
+                  src="/van.jpg"
+                  alt="Modern delivery van logistics vehicle"
                   width={1000}
                   height={800}
+                  priority
                   unoptimized
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -196,7 +208,7 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 4. "SERVICES BUILT AROUND YOUR DELIVERY PROMISE" GRID (Clean White & Slate Backgrounds) */}
+      {/* 4. "SERVICES BUILT AROUND YOUR DELIVERY PROMISE" GRID */}
       <section id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-left">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
@@ -318,7 +330,7 @@ export default function PublicLandingPage() {
       {/* 5. "TECHNOLOGY & LOGISTICS" SECTION (Brand Blue Background) */}
       <section className="bg-[#1D4ED8] text-white py-20 px-4 sm:px-6 lg:px-8 text-left border-y border-blue-600">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Real Logistics Warehouse Interior (No Overlay Badges) */}
+          {/* Left Column: Real Logistics Warehouse Interior */}
           <div className="lg:col-span-5">
             <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-blue-950 group">
               <div className="relative h-80 sm:h-96 w-full">
@@ -442,7 +454,7 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 7. "HUBS, FLEETS & PEOPLE" BANNER (Background Image with Brand Blue Gradient Overlay) */}
+      {/* 7. "HUBS, FLEETS & PEOPLE" BANNER (Background Image with Primary Brand Blue Gradient Overlay) */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 text-center text-white overflow-hidden">
         {/* Background Image with Primary Brand Blue Gradient Overlay */}
         <div className="absolute inset-0 z-0">
@@ -451,10 +463,10 @@ export default function PublicLandingPage() {
             alt="Container terminal cargo port operations"
             fill
             unoptimized
-            className="object-cover"
+            className="object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-[#1D4ED8]/85 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1E40AF] via-[#1D4ED8]/80 to-[#1E40AF]/90" />
+          <div className="absolute inset-0 bg-blue-900/85 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E40AF] via-[#1D4ED8]/85 to-[#1E40AF]/95" />
         </div>
 
         <div className="max-w-3xl mx-auto space-y-6 relative z-10">
@@ -471,7 +483,7 @@ export default function PublicLandingPage() {
           <div className="pt-2">
             <Link
               href="/services"
-              className="inline-block px-8 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-xl shadow-blue-900/40 transition-all hover:scale-105 active:scale-95"
+              className="inline-block px-8 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-xl shadow-blue-950/40 transition-all hover:scale-105 active:scale-95"
             >
               Explore Operations
             </Link>
@@ -521,13 +533,13 @@ export default function PublicLandingPage() {
             </div>
           </div>
 
-          {/* Right Image Card: Modern Courier Carrying Delivery Packages (Clean, No Overlay Cards) */}
+          {/* Right Image Card: Modern Courier Driver & Logistics Operations */}
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl group bg-slate-100">
               <div className="relative h-72 sm:h-80 w-full">
                 <Image
-                  src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?q=80&w=1000"
-                  alt="Modern fulfillment and package handling"
+                  src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1000"
+                  alt="Modern courier logistics specialist handling delivery orders"
                   width={1000}
                   height={800}
                   unoptimized
@@ -580,7 +592,7 @@ export default function PublicLandingPage() {
             </div>
           </div>
 
-          {/* Right Wide Aerial Image of Cargo Port (Clean, No Overlay Cards) */}
+          {/* Right Wide Aerial Image of Cargo Port */}
           <div className="lg:col-span-7">
             <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl group bg-slate-100">
               <div className="relative h-72 sm:h-80 w-full">
@@ -598,124 +610,141 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 10. MULTI-CHANNEL SUPPORT SECTION (Brand Blue Background) */}
-      <section id="contact" className="bg-[#1D4ED8] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-5xl mx-auto space-y-10">
-          <div className="space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              24/7 Multi-Channel Support
-            </h2>
-            <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto">
-              Connect instantly with our dedicated support agents via Live Web Chat, official WhatsApp, Telegram bot, or phone.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-            {/* 1. Live Chat */}
-            <button
-              type="button"
-              onClick={openTawkChat}
-              className="bg-blue-800/70 border border-blue-400/30 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg text-left cursor-pointer group"
-            >
-              <div className="space-y-2">
-                <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-md">
-                  <MessageSquare className="w-5 h-5" />
-                </div>
-                <h4 className="text-sm font-bold text-white">Live Web Chat</h4>
-                <p className="text-blue-100 text-[11px]">Instant in-browser chat with agents.</p>
-              </div>
-              <span className="text-[11px] font-bold text-cyan-300 flex items-center gap-1 group-hover:underline">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Launch Live Chat &rarr;
-              </span>
-            </button>
-
-            {/* 2. WhatsApp */}
-            <a
-              href="https://wa.me/237680650832?text=Hello%20ShipNGo%20Support,%20I%20need%20assistance%20with%20my%20shipment."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-emerald-800/50 border border-emerald-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
-            >
-              <div className="space-y-2">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-md">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <h4 className="text-sm font-bold flex items-center gap-1">
-                  WhatsApp Support
-                  <ExternalLink className="w-3 h-3 opacity-70" />
-                </h4>
-                <p className="text-emerald-100 text-[11px] font-mono">+237 680 650 832</p>
-              </div>
-              <span className="text-[11px] font-bold text-emerald-300 group-hover:underline">
-                Open WhatsApp &rarr;
-              </span>
-            </a>
-
-            {/* 3. Telegram */}
-            <a
-              href="https://t.me/ShipNGoSupportBot?start=support"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-sky-800/50 border border-sky-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
-            >
-              <div className="space-y-2">
-                <div className="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center shadow-md">
-                  <SendHorizontal className="w-5 h-5 ml-0.5" />
-                </div>
-                <h4 className="text-sm font-bold flex items-center gap-1">
-                  Telegram Bot
-                  <ExternalLink className="w-3 h-3 opacity-70" />
-                </h4>
-                <p className="text-sky-100 text-[11px] font-mono">@ShipNGoSupportBot</p>
-              </div>
-              <span className="text-[11px] font-bold text-sky-200 group-hover:underline">
-                Open Telegram &rarr;
-              </span>
-            </a>
-
-            {/* 4. Email */}
-            <a
-              href="mailto:support@shipngo.com"
-              className="bg-blue-800/70 border border-blue-400/30 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
-            >
-              <div className="space-y-2">
-                <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-md">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <h4 className="text-sm font-bold">Email Support</h4>
-                <p className="text-blue-100 text-[11px] font-mono">support@shipngo.com</p>
-              </div>
-              <span className="text-[11px] font-bold text-blue-200 group-hover:underline">
-                Send Email &rarr;
-              </span>
-            </a>
-          </div>
+      {/* 10. MULTI-CHANNEL SUPPORT & READY TO MOVE SECTION (Freight Hub Background with Brand Blue Overlay) */}
+      <section id="contact" className="relative text-white py-20 px-4 sm:px-6 lg:px-8 text-center overflow-hidden bg-[#1D4ED8]">
+        {/* Background Image with Dark Blue Overlay */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Image
+            src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600"
+            alt="Night logistics freight facility"
+            fill
+            unoptimized
+            className="object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-blue-900/85 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E40AF] via-[#1D4ED8]/90 to-[#1E40AF]" />
         </div>
-      </section>
 
-      {/* 11. "READY TO MOVE?" BOTTOM CALL-TO-ACTION BANNER (Brand Blue Background) */}
-      <section className="bg-[#1E40AF] text-white py-16 px-4 sm:px-6 lg:px-8 text-center border-t border-blue-600/60">
-        <div className="max-w-3xl mx-auto space-y-5">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Ready to move?
-          </h2>
-          <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
-            Get your shipment moving today with live GPS telemetry, dedicated support, and verified delivery.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
-            <a
-              href="#track-box"
-              className="px-7 py-3 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-lg shadow-blue-900/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
-            >
-              Get Started
-            </a>
-            <Link
-              href="/contact"
-              className="px-7 py-3 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-semibold text-xs border border-white/20 transition-all hover:scale-105"
-            >
-              Contact Support
-            </Link>
+        <div className="max-w-5xl mx-auto space-y-16 relative z-10">
+          {/* Support Channels */}
+          <div className="space-y-10">
+            <div className="space-y-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-cyan-200 bg-white/15 border border-white/20 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                Always Online
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                24/7 Multi-Channel Support
+              </h2>
+              <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto">
+                Connect instantly with our dedicated support agents via Live Web Chat, official WhatsApp, Telegram bot, or direct email.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+              {/* 1. Live Chat */}
+              <button
+                type="button"
+                onClick={openTawkChat}
+                className="bg-blue-800/70 border border-white/20 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg text-left cursor-pointer group"
+              >
+                <div className="space-y-2">
+                  <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-md">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <h4 className="text-sm font-bold text-white">Live Web Chat</h4>
+                  <p className="text-blue-100 text-[11px]">Instant in-browser chat with agents.</p>
+                </div>
+                <span className="text-[11px] font-bold text-cyan-300 flex items-center gap-1 group-hover:underline">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Launch Live Chat &rarr;
+                </span>
+              </button>
+
+              {/* 2. WhatsApp */}
+              <a
+                href="https://wa.me/237680650832?text=Hello%20ShipNGo%20Support,%20I%20need%20assistance%20with%20my%20shipment."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-emerald-800/50 border border-emerald-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
+              >
+                <div className="space-y-2">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-md">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <h4 className="text-sm font-bold flex items-center gap-1">
+                    WhatsApp Support
+                    <ExternalLink className="w-3 h-3 opacity-70" />
+                  </h4>
+                  <p className="text-emerald-100 text-[11px] font-mono">+237 680 650 832</p>
+                </div>
+                <span className="text-[11px] font-bold text-emerald-300 group-hover:underline">
+                  Open WhatsApp &rarr;
+                </span>
+              </a>
+
+              {/* 3. Telegram */}
+              <a
+                href="https://t.me/ShipNGoSupportBot?start=support"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-sky-800/50 border border-sky-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
+              >
+                <div className="space-y-2">
+                  <div className="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center shadow-md">
+                    <SendHorizontal className="w-5 h-5 ml-0.5" />
+                  </div>
+                  <h4 className="text-sm font-bold flex items-center gap-1">
+                    Telegram Bot
+                    <ExternalLink className="w-3 h-3 opacity-70" />
+                  </h4>
+                  <p className="text-sky-100 text-[11px] font-mono">@ShipNGoSupportBot</p>
+                </div>
+                <span className="text-[11px] font-bold text-sky-200 group-hover:underline">
+                  Open Telegram &rarr;
+                </span>
+              </a>
+
+              {/* 4. Email */}
+              <a
+                href="mailto:support@shipngo.com"
+                className="bg-blue-800/70 border border-white/20 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
+              >
+                <div className="space-y-2">
+                  <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-md">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <h4 className="text-sm font-bold">Email Support</h4>
+                  <p className="text-blue-100 text-[11px] font-mono">support@shipngo.com</p>
+                </div>
+                <span className="text-[11px] font-bold text-blue-200 group-hover:underline">
+                  Send Email &rarr;
+                </span>
+              </a>
+            </div>
+          </div>
+
+          {/* Bottom Conversion Callout */}
+          <div className="pt-8 border-t border-blue-400/30 max-w-3xl mx-auto space-y-5">
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Ready to move?
+            </h3>
+            <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+              Get your shipment moving today with live GPS telemetry, dedicated support, and verified delivery.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+              <a
+                href="#track-box"
+                className="px-7 py-3 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-lg shadow-blue-950/40 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                Get Started
+              </a>
+              <Link
+                href="/contact"
+                className="px-7 py-3 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-semibold text-xs border border-white/25 transition-all hover:scale-105"
+              >
+                Contact Support
+              </Link>
+            </div>
           </div>
         </div>
       </section>
