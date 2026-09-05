@@ -11,7 +11,6 @@ import {
   Truck,
   CheckCircle2,
   Clock,
-  AlertCircle,
   ExternalLink,
   MapPin,
   Calendar,
@@ -21,6 +20,10 @@ import {
   TrendingUp,
   Activity,
   Layers,
+  User,
+  Phone,
+  Mail,
+  Building2,
 } from 'lucide-react';
 import api from '@/lib/api';
 import socket from '@/lib/socket';
@@ -29,7 +32,11 @@ interface Parcel {
   id: number;
   tracking_number: string;
   sender_name: string;
+  sender_phone?: string;
+  sender_email?: string;
   recipient_name: string;
+  recipient_phone?: string;
+  recipient_email?: string;
   origin: string;
   destination: string;
   status: string;
@@ -50,12 +57,19 @@ export default function AdminDashboardPage() {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedParcel, setSelectedParcel] = useState<Parcel | null>(null);
 
-  // Create Form State
-  const [newSender, setNewSender] = useState('');
-  const [newRecipient, setNewRecipient] = useState('');
-  const [newOrigin, setNewOrigin] = useState('');
-  const [newDestination, setNewDestination] = useState('');
+  // Create Form State - Full Sender & Recipient Details
+  const [newSenderName, setNewSenderName] = useState('');
+  const [newSenderPhone, setNewSenderPhone] = useState('');
+  const [newSenderEmail, setNewSenderEmail] = useState('');
+  const [newOriginHub, setNewOriginHub] = useState('');
+
+  const [newRecipientName, setNewRecipientName] = useState('');
+  const [newRecipientPhone, setNewRecipientPhone] = useState('');
+  const [newRecipientEmail, setNewRecipientEmail] = useState('');
+  const [newDestinationAddress, setNewDestinationAddress] = useState('');
+
   const [newLocation, setNewLocation] = useState('');
+  const [newEstimatedDelivery, setNewEstimatedDelivery] = useState('');
   const [newStatus, setNewStatus] = useState('Parcel Received');
   const [createLoading, setCreateLoading] = useState(false);
 
@@ -107,22 +121,35 @@ export default function AdminDashboardPage() {
     setCreateLoading(true);
     try {
       const response = await api.post('/admin/parcels', {
-        sender_name: newSender,
-        recipient_name: newRecipient,
-        origin: newOrigin,
-        destination: newDestination,
-        current_location: newLocation || newOrigin,
+        sender_name: newSenderName,
+        sender_phone: newSenderPhone,
+        sender_email: newSenderEmail,
+        origin_hub: newOriginHub,
+        origin: newOriginHub,
+        recipient_name: newRecipientName,
+        recipient_phone: newRecipientPhone,
+        recipient_email: newRecipientEmail,
+        destination_address: newDestinationAddress,
+        destination: newDestinationAddress,
+        current_location: newLocation || newOriginHub,
+        estimated_delivery: newEstimatedDelivery ? new Date(newEstimatedDelivery).toISOString() : null,
         status: newStatus,
       });
 
       if (response.data?.success) {
         setIsCreateModalOpen(false);
         // Reset form
-        setNewSender('');
-        setNewRecipient('');
-        setNewOrigin('');
-        setNewDestination('');
+        setNewSenderName('');
+        setNewSenderPhone('');
+        setNewSenderEmail('');
+        setNewOriginHub('');
+        setNewRecipientName('');
+        setNewRecipientPhone('');
+        setNewRecipientEmail('');
+        setNewDestinationAddress('');
         setNewLocation('');
+        setNewEstimatedDelivery('');
+        setNewStatus('Parcel Received');
         fetchParcels();
       }
     } catch (err: any) {
@@ -220,7 +247,7 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Create New Shipment</span>
@@ -320,7 +347,7 @@ export default function AdminDashboardPage() {
               <tr>
                 <th className="px-5 py-4">Tracking Code</th>
                 <th className="px-5 py-4">Route</th>
-                <th className="px-5 py-4">Recipient</th>
+                <th className="px-5 py-4">Sender & Recipient</th>
                 <th className="px-5 py-4">Current Hub</th>
                 <th className="px-5 py-4">Status</th>
                 <th className="px-5 py-4">Events</th>
@@ -360,7 +387,10 @@ export default function AdminDashboardPage() {
                       <span className="text-slate-500 mx-1.5">&rarr;</span>
                       <span className="text-slate-200 font-medium">{p.destination}</span>
                     </td>
-                    <td className="px-5 py-4 font-semibold text-white">{p.recipient_name}</td>
+                    <td className="px-5 py-4">
+                      <div className="font-semibold text-white">{p.recipient_name}</div>
+                      <div className="text-[11px] text-slate-400">From: {p.sender_name}</div>
+                    </td>
                     <td className="px-5 py-4 text-slate-400 font-medium">{p.current_location || '—'}</td>
                     <td className="px-5 py-4">
                       <span
@@ -380,7 +410,7 @@ export default function AdminDashboardPage() {
                           setUpdateLocationVal(p.current_location || p.destination);
                           setIsUpdateModalOpen(true);
                         }}
-                        className="px-3.5 py-1.5 rounded-lg bg-indigo-600/10 hover:bg-indigo-600 text-indigo-300 hover:text-white font-bold text-xs transition-all border border-indigo-500/20 hover:border-indigo-500 shadow-sm"
+                        className="px-3.5 py-1.5 rounded-lg bg-indigo-600/10 hover:bg-indigo-600 text-indigo-300 hover:text-white font-bold text-xs transition-all border border-indigo-500/20 hover:border-indigo-500 shadow-sm cursor-pointer"
                       >
                         Update Status
                       </button>
@@ -393,15 +423,20 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* CREATE PARCEL MODAL */}
+      {/* CREATE PARCEL MODAL WITH STRUCTURED SENDER & RECIPIENT GROUPS */}
       {isCreateModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="glass-card w-full max-w-lg p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Plus className="w-5 h-5 text-indigo-400" />
-                <span>Register New Shipment</span>
-              </h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
+          <div className="glass-card w-full max-w-2xl p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl relative my-8">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+              <div>
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Plus className="w-5 h-5 text-indigo-400" />
+                  <span>Register New Shipment</span>
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Enter complete sender, recipient, and routing parameters.
+                </p>
+              </div>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
                 className="p-1 rounded-lg text-slate-400 hover:text-white"
@@ -410,91 +445,175 @@ export default function AdminDashboardPage() {
               </button>
             </div>
 
-            <form onSubmit={handleCreateParcel} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Sender Entity / Hub
-                  </label>
-                  <input
-                    type="text"
-                    value={newSender}
-                    onChange={(e) => setNewSender(e.target.value)}
-                    placeholder="e.g. Apex NY Distribution"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
-                    required
-                  />
+            <form onSubmit={handleCreateParcel} className="space-y-6">
+              {/* SENDER DETAILS GROUP */}
+              <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3.5">
+                <div className="flex items-center gap-2 text-indigo-400 font-bold text-xs">
+                  <Building2 className="w-4 h-4" />
+                  <span>Sender Details</span>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Recipient Full Name
-                  </label>
-                  <input
-                    type="text"
-                    value={newRecipient}
-                    onChange={(e) => setNewRecipient(e.target.value)}
-                    placeholder="e.g. Sarah Jenkins"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
-                    required
-                  />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Sender Name / Entity *
+                    </label>
+                    <input
+                      type="text"
+                      value={newSenderName}
+                      onChange={(e) => setNewSenderName(e.target.value)}
+                      placeholder="e.g. Apex Global Logistics Hub"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Origin Address / Hub *
+                    </label>
+                    <input
+                      type="text"
+                      value={newOriginHub}
+                      onChange={(e) => setNewOriginHub(e.target.value)}
+                      placeholder="e.g. JFK Terminal 4, New York, NY"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Sender Phone
+                    </label>
+                    <input
+                      type="text"
+                      value={newSenderPhone}
+                      onChange={(e) => setNewSenderPhone(e.target.value)}
+                      placeholder="e.g. +1 (555) 234-5678"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Sender Email
+                    </label>
+                    <input
+                      type="email"
+                      value={newSenderEmail}
+                      onChange={(e) => setNewSenderEmail(e.target.value)}
+                      placeholder="e.g. dispatch@apexlogistics.com"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Origin City / Hub
-                  </label>
-                  <input
-                    type="text"
-                    value={newOrigin}
-                    onChange={(e) => setNewOrigin(e.target.value)}
-                    placeholder="e.g. New York, NY"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
-                    required
-                  />
+              {/* RECIPIENT DETAILS GROUP */}
+              <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3.5">
+                <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs">
+                  <User className="w-4 h-4" />
+                  <span>Customer / Recipient Details</span>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Destination City / Country
-                  </label>
-                  <input
-                    type="text"
-                    value={newDestination}
-                    onChange={(e) => setNewDestination(e.target.value)}
-                    placeholder="e.g. Los Angeles, CA"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
-                    required
-                  />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Recipient Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      value={newRecipientName}
+                      onChange={(e) => setNewRecipientName(e.target.value)}
+                      placeholder="e.g. Sarah Jenkins"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Destination Address *
+                    </label>
+                    <input
+                      type="text"
+                      value={newDestinationAddress}
+                      onChange={(e) => setNewDestinationAddress(e.target.value)}
+                      placeholder="e.g. 742 Evergreen Terrace, Springfield, OR"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Recipient Phone
+                    </label>
+                    <input
+                      type="text"
+                      value={newRecipientPhone}
+                      onChange={(e) => setNewRecipientPhone(e.target.value)}
+                      placeholder="e.g. +1 (555) 987-6543"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Recipient Email
+                    </label>
+                    <input
+                      type="email"
+                      value={newRecipientEmail}
+                      onChange={(e) => setNewRecipientEmail(e.target.value)}
+                      placeholder="e.g. sarah.jenkins@example.com"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              {/* SHIPMENT LOGISTICS PARAMS */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Current Facility / Node
+                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                    Current Facility Node
                   </label>
                   <input
                     type="text"
                     value={newLocation}
                     onChange={(e) => setNewLocation(e.target.value)}
                     placeholder="Optional (defaults to Origin)"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
                     Initial Status
                   </label>
                   <select
                     value={newStatus}
                     onChange={(e) => setNewStatus(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs font-semibold focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white text-xs font-semibold focus:ring-1 focus:ring-indigo-500"
                   >
                     <option value="Parcel Received">Parcel Received</option>
                     <option value="In Transit">In Transit</option>
                     <option value="Out for Delivery">Out for Delivery</option>
                   </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                    Estimated Delivery Date
+                  </label>
+                  <input
+                    type="date"
+                    value={newEstimatedDelivery}
+                    onChange={(e) => setNewEstimatedDelivery(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                  />
                 </div>
               </div>
 
@@ -502,16 +621,16 @@ export default function AdminDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setIsCreateModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all"
+                  className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={createLoading}
-                  className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all"
+                  className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer"
                 >
-                  {createLoading ? 'Generating Tracking ID...' : 'Register Package'}
+                  {createLoading ? 'Generating Tracking ID...' : 'Register Shipment'}
                 </button>
               </div>
             </form>

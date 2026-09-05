@@ -12,7 +12,11 @@ export const getParcelByTrackingNumber = async (trackingNumber) => {
       id,
       tracking_number,
       sender_name,
+      sender_phone,
+      sender_email,
       recipient_name,
+      recipient_phone,
+      recipient_email,
       origin,
       destination,
       status,
@@ -63,37 +67,53 @@ export const getParcelByTrackingNumber = async (trackingNumber) => {
 export const createParcel = async (parcelData, userId = null) => {
   const {
     sender_name,
+    sender_phone = null,
+    sender_email = null,
     recipient_name,
+    recipient_phone = null,
+    recipient_email = null,
     origin,
+    origin_hub,
     destination,
+    destination_address,
     current_location,
     estimated_delivery,
     status = 'Parcel Received',
   } = parcelData;
 
+  const originVal = origin || origin_hub || 'Origin Hub';
+  const destVal = destination || destination_address || 'Destination Address';
   const trackingNumber = generateTrackingNumber();
-  const initialLocation = current_location || origin;
+  const initialLocation = current_location || originVal;
 
   const insertParcelQuery = `
     INSERT INTO parcels (
       tracking_number,
       sender_name,
+      sender_phone,
+      sender_email,
       recipient_name,
+      recipient_phone,
+      recipient_email,
       origin,
       destination,
       status,
       current_location,
       estimated_delivery
-    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     RETURNING *;
   `;
 
   const parcelResult = await query(insertParcelQuery, [
     trackingNumber,
     sender_name,
+    sender_phone,
+    sender_email,
     recipient_name,
-    origin,
-    destination,
+    recipient_phone,
+    recipient_email,
+    originVal,
+    destVal,
     status,
     initialLocation,
     estimated_delivery || null,
@@ -209,7 +229,11 @@ export const getAllParcels = async (limit = 50, offset = 0) => {
       p.id,
       p.tracking_number,
       p.sender_name,
+      p.sender_phone,
+      p.sender_email,
       p.recipient_name,
+      p.recipient_phone,
+      p.recipient_email,
       p.origin,
       p.destination,
       p.status,

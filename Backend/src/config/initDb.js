@@ -27,7 +27,11 @@ export const initDb = async () => {
         id SERIAL PRIMARY KEY,
         tracking_number VARCHAR(50) UNIQUE NOT NULL,
         sender_name VARCHAR(100) NOT NULL,
+        sender_phone VARCHAR(50),
+        sender_email VARCHAR(150),
         recipient_name VARCHAR(100) NOT NULL,
+        recipient_phone VARCHAR(50),
+        recipient_email VARCHAR(150),
         origin VARCHAR(100) NOT NULL,
         destination VARCHAR(100) NOT NULL,
         status VARCHAR(50) DEFAULT 'Pending',
@@ -36,6 +40,14 @@ export const initDb = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+    `);
+
+    // Ensure newly added columns exist on existing table instances
+    await query(`
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS sender_phone VARCHAR(50);
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS sender_email VARCHAR(150);
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS recipient_phone VARCHAR(50);
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS recipient_email VARCHAR(150);
     `);
 
     // 3. parcel_events table

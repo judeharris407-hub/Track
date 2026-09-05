@@ -12,18 +12,27 @@ export const createParcel = async (req, res, next) => {
   try {
     const {
       sender_name,
-      recipient_name,
+      sender_phone,
+      sender_email,
       origin,
+      origin_hub,
+      recipient_name,
+      recipient_phone,
+      recipient_email,
       destination,
+      destination_address,
       current_location,
       estimated_delivery,
       status,
     } = req.body;
 
-    if (!sender_name || !recipient_name || !origin || !destination) {
+    const originVal = origin || origin_hub;
+    const destVal = destination || destination_address;
+
+    if (!sender_name || !recipient_name || !originVal || !destVal) {
       return res.status(400).json({
         success: false,
-        message: 'sender_name, recipient_name, origin, and destination are required fields.',
+        message: 'sender_name, recipient_name, origin (origin_hub), and destination (destination_address) are required fields.',
       });
     }
 
@@ -32,9 +41,15 @@ export const createParcel = async (req, res, next) => {
     const parcel = await createParcelService(
       {
         sender_name,
+        sender_phone,
+        sender_email,
+        origin: originVal,
+        origin_hub: originVal,
         recipient_name,
-        origin,
-        destination,
+        recipient_phone,
+        recipient_email,
+        destination: destVal,
+        destination_address: destVal,
         current_location,
         estimated_delivery,
         status,
