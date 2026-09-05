@@ -51,20 +51,20 @@ export default function PublicLandingPage() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-600 selection:text-white">
-      {/* 1. HERO SECTION (Primary Brand Blue with Subtle Logistics Port Background Overlay) */}
-      <section className="relative text-white pt-14 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#1D4ED8]">
-        {/* Background Cargo Port Image with Brand Blue Overlay */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* 1. HERO SECTION (Primary Brand Blue with Visible Logistics Port Background Overlay) */}
+      <section className="relative text-white pt-14 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-950">
+        {/* Background Cargo Port Image with Rich Blue Tint Overlay */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1600"
             alt="Cargo port logistics backdrop"
             fill
             priority
             unoptimized
-            className="object-cover opacity-25"
+            className="object-cover opacity-60 scale-105"
           />
-          <div className="absolute inset-0 bg-blue-900/85 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1E40AF]/95 via-[#1D4ED8]/85 to-[#1E40AF]/90" />
+          <div className="absolute inset-0 bg-[#1D4ED8]/75 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-950/85 via-[#1D4ED8]/65 to-blue-950/85" />
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
@@ -82,7 +82,7 @@ export default function PublicLandingPage() {
               </span>
             </h1>
 
-            <p className="text-blue-50 text-sm sm:text-base leading-relaxed max-w-xl font-normal">
+            <p className="text-blue-50 text-sm sm:text-base leading-relaxed max-w-xl font-normal drop-shadow-sm">
               Precision line-haul courier services, real-time GPS telemetry, and automated milestone verification engineered to keep your supply chain moving seamlessly.
             </p>
 
@@ -96,7 +96,7 @@ export default function PublicLandingPage() {
               </a>
               <Link
                 href="/services"
-                className="px-6 py-3.5 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-semibold text-xs border border-white/20 transition-all"
+                className="px-6 py-3.5 rounded-xl bg-blue-900/70 hover:bg-blue-800 text-white font-semibold text-xs border border-white/20 transition-all backdrop-blur-sm"
               >
                 Explore Services
               </Link>
@@ -327,9 +327,22 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 5. "TECHNOLOGY & LOGISTICS" SECTION (Brand Blue Background) */}
-      <section className="bg-[#1D4ED8] text-white py-20 px-4 sm:px-6 lg:px-8 text-left border-y border-blue-600">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* 5. "TECHNOLOGY & LOGISTICS" SECTION (Brand Blue Background with Logistics Overlay) */}
+      <section className="relative bg-slate-950 text-white py-20 px-4 sm:px-6 lg:px-8 text-left border-y border-blue-600/50 overflow-hidden">
+        {/* Background Logistics Facility Overlay */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <Image
+            src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600"
+            alt="Logistics warehouse backdrop"
+            fill
+            unoptimized
+            className="object-cover opacity-50"
+          />
+          <div className="absolute inset-0 bg-[#1D4ED8]/80 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-950/85 via-[#1D4ED8]/70 to-blue-950/85" />
+        </div>
+
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Column: Real Logistics Warehouse Interior */}
           <div className="lg:col-span-5">
             <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-blue-950 group">
@@ -362,7 +375,7 @@ export default function PublicLandingPage() {
 
             {/* 2x2 Feature Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="p-5 rounded-2xl bg-blue-800/60 border border-blue-400/30 backdrop-blur-sm space-y-2">
+              <div className="p-5 rounded-2xl bg-blue-900/70 border border-white/20 backdrop-blur-md space-y-2">
                 <div className="w-8 h-8 rounded-lg bg-white/20 text-white flex items-center justify-center font-bold text-xs">
                   01
                 </div>
@@ -372,7 +385,7 @@ export default function PublicLandingPage() {
                 </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-blue-800/60 border border-blue-400/30 backdrop-blur-sm space-y-2">
+              <div className="p-5 rounded-2xl bg-blue-900/70 border border-white/20 backdrop-blur-md space-y-2">
                 <div className="w-8 h-8 rounded-lg bg-emerald-400/30 text-emerald-200 flex items-center justify-center font-bold text-xs">
                   02
                 </div>
@@ -382,7 +395,7 @@ export default function PublicLandingPage() {
                 </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-blue-800/60 border border-blue-400/30 backdrop-blur-sm space-y-2">
+              <div className="p-5 rounded-2xl bg-blue-900/70 border border-white/20 backdrop-blur-md space-y-2">
                 <div className="w-8 h-8 rounded-lg bg-cyan-400/30 text-cyan-200 flex items-center justify-center font-bold text-xs">
                   03
                 </div>
@@ -392,7 +405,7 @@ export default function PublicLandingPage() {
                 </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-blue-800/60 border border-blue-400/30 backdrop-blur-sm space-y-2">
+              <div className="p-5 rounded-2xl bg-blue-900/70 border border-white/20 backdrop-blur-md space-y-2">
                 <div className="w-8 h-8 rounded-lg bg-indigo-400/30 text-indigo-200 flex items-center justify-center font-bold text-xs">
                   04
                 </div>
@@ -454,19 +467,19 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 7. "HUBS, FLEETS & PEOPLE" BANNER (Background Image with Primary Brand Blue Gradient Overlay) */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 text-center text-white overflow-hidden">
-        {/* Background Image with Primary Brand Blue Gradient Overlay */}
-        <div className="absolute inset-0 z-0">
+      {/* 7. "HUBS, FLEETS & PEOPLE" BANNER (Visible Background Image with Brand Blue Tint Overlay) */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 text-center text-white overflow-hidden bg-slate-950">
+        {/* Background Image with Vibrant Primary Brand Blue Tint Overlay */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1600"
             alt="Container terminal cargo port operations"
             fill
             unoptimized
-            className="object-cover opacity-25"
+            className="object-cover opacity-60 scale-105"
           />
-          <div className="absolute inset-0 bg-blue-900/85 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1E40AF] via-[#1D4ED8]/85 to-[#1E40AF]/95" />
+          <div className="absolute inset-0 bg-[#1D4ED8]/75 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-[#1D4ED8]/60 to-blue-950/85" />
         </div>
 
         <div className="max-w-3xl mx-auto space-y-6 relative z-10">
@@ -477,7 +490,7 @@ export default function PublicLandingPage() {
             Hubs, fleets and people, <br />
             working as one system.
           </h2>
-          <p className="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-xl mx-auto drop-shadow-sm">
             From automated customs clearing to door-to-door temperature monitoring, ShipNGo gives you total visibility over every pallet and parcel.
           </p>
           <div className="pt-2">
@@ -610,19 +623,19 @@ export default function PublicLandingPage() {
         </div>
       </section>
 
-      {/* 10. MULTI-CHANNEL SUPPORT & READY TO MOVE SECTION (Freight Hub Background with Brand Blue Overlay) */}
-      <section id="contact" className="relative text-white py-20 px-4 sm:px-6 lg:px-8 text-center overflow-hidden bg-[#1D4ED8]">
-        {/* Background Image with Dark Blue Overlay */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* 10. MULTI-CHANNEL SUPPORT & READY TO MOVE SECTION (Visible Freight Hub Background with Brand Blue Overlay) */}
+      <section id="contact" className="relative text-white py-20 px-4 sm:px-6 lg:px-8 text-center overflow-hidden bg-slate-950">
+        {/* Background Image with Blue Tint Overlay */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600"
             alt="Night logistics freight facility"
             fill
             unoptimized
-            className="object-cover opacity-25"
+            className="object-cover opacity-60 scale-105"
           />
-          <div className="absolute inset-0 bg-blue-900/85 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1E40AF] via-[#1D4ED8]/90 to-[#1E40AF]" />
+          <div className="absolute inset-0 bg-[#1D4ED8]/75 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-[#1D4ED8]/65 to-blue-950/85" />
         </div>
 
         <div className="max-w-5xl mx-auto space-y-16 relative z-10">
@@ -635,7 +648,7 @@ export default function PublicLandingPage() {
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
                 24/7 Multi-Channel Support
               </h2>
-              <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto">
+              <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto drop-shadow-sm">
                 Connect instantly with our dedicated support agents via Live Web Chat, official WhatsApp, Telegram bot, or direct email.
               </p>
             </div>
@@ -645,7 +658,7 @@ export default function PublicLandingPage() {
               <button
                 type="button"
                 onClick={openTawkChat}
-                className="bg-blue-800/70 border border-white/20 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg text-left cursor-pointer group"
+                className="bg-blue-900/70 border border-white/20 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg text-left cursor-pointer group"
               >
                 <div className="space-y-2">
                   <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-md">
@@ -665,7 +678,7 @@ export default function PublicLandingPage() {
                 href="https://wa.me/237680650832?text=Hello%20ShipNGo%20Support,%20I%20need%20assistance%20with%20my%20shipment."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-emerald-800/50 border border-emerald-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
+                className="bg-emerald-900/70 border border-emerald-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
               >
                 <div className="space-y-2">
                   <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-md">
@@ -687,7 +700,7 @@ export default function PublicLandingPage() {
                 href="https://t.me/ShipNGoSupportBot?start=support"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-sky-800/50 border border-sky-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
+                className="bg-sky-900/70 border border-sky-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
               >
                 <div className="space-y-2">
                   <div className="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center shadow-md">
@@ -707,7 +720,7 @@ export default function PublicLandingPage() {
               {/* 4. Email */}
               <a
                 href="mailto:support@shipngo.com"
-                className="bg-blue-800/70 border border-white/20 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
+                className="bg-blue-900/70 border border-white/20 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
               >
                 <div className="space-y-2">
                   <div className="w-10 h-10 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-md">
@@ -728,7 +741,7 @@ export default function PublicLandingPage() {
             <h3 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               Ready to move?
             </h3>
-            <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+            <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed drop-shadow-sm">
               Get your shipment moving today with live GPS telemetry, dedicated support, and verified delivery.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
@@ -740,7 +753,7 @@ export default function PublicLandingPage() {
               </a>
               <Link
                 href="/contact"
-                className="px-7 py-3 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-semibold text-xs border border-white/25 transition-all hover:scale-105"
+                className="px-7 py-3 rounded-xl bg-blue-900/70 hover:bg-blue-800 text-white font-semibold text-xs border border-white/25 transition-all hover:scale-105 backdrop-blur-sm"
               >
                 Contact Support
               </Link>
