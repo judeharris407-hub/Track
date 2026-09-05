@@ -76,7 +76,7 @@ export default function ContactPage() {
                 <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
                 <h3 className="text-lg font-bold text-emerald-900">Message Received!</h3>
                 <p className="text-xs text-emerald-700">
-                  Thank you for contacting ShipNGo. A support representative has been assigned to your ticket.
+                  Thank you for contacting SkyPrime Logistics. A support representative has been assigned to your ticket.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
@@ -189,8 +189,8 @@ export default function ContactPage() {
                     <span className="text-[11px] text-slate-400 font-semibold block uppercase tracking-wider">
                       Support Email
                     </span>
-                    <a href="mailto:support@shipngo.com" className="text-sm font-bold text-slate-900 hover:text-blue-600 font-mono">
-                      support@shipngo.com
+                    <a href="mailto:support@skyprimelogistics.com" className="text-sm font-bold text-slate-900 hover:text-blue-600 font-mono">
+                      support@skyprimelogistics.com
                     </a>
                   </div>
                 </li>

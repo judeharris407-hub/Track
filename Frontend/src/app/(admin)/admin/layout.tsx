@@ -11,6 +11,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { AuthProvider, useAuth } from '@/lib/authContext';
+import SkyPrimeLogo from '@/components/SkyPrimeLogo';
 
 function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -65,17 +66,13 @@ function AdminShell({ children }: { children: React.ReactNode }) {
       <aside className="w-full md:w-64 bg-slate-950/90 border-r border-slate-800 flex flex-col justify-between shrink-0">
         <div>
           {/* Brand */}
-          <div className="p-5 border-b border-slate-800 flex items-center justify-between">
-            <Link href="/admin/dashboard" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-                <Package className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-extrabold text-sm text-white block">TrackPulse</span>
-                <span className="text-[10px] text-indigo-400 font-mono tracking-wider uppercase font-semibold">
-                  Admin Platform
-                </span>
-              </div>
+          <div className="p-5 border-b border-slate-800">
+            <Link href="/admin/dashboard" className="flex items-center">
+              <SkyPrimeLogo
+                className="h-9 w-auto"
+                textColor="text-white"
+                subTextColor="text-blue-400"
+              />
             </Link>
           </div>
 

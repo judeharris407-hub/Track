@@ -47,11 +47,11 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
   // WhatsApp & Telegram configuration (with fallbacks)
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+14155238886';
   const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
-  const telegramBotUsername = process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || 'ShipNGoSupportBot';
+  const telegramBotUsername = process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || 'SkyPrimeSupportBot';
 
   const defaultSupportMessage = trackingNumber
-    ? `Hello ShipNGo Support, I need assistance with my tracking number: ${trackingNumber}`
-    : 'Hello ShipNGo Support, I need assistance with my package.';
+    ? `Hello SkyPrime Support, I need assistance with my tracking number: ${trackingNumber}`
+    : 'Hello SkyPrime Support, I need assistance with my package.';
 
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(defaultSupportMessage)}`;
   const telegramUrl = `https://t.me/${telegramBotUsername}?start=${encodeURIComponent(trackingNumber || 'support')}`;
@@ -239,7 +239,7 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
                 <Headphones className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-sm font-bold leading-tight">ShipNGo Support</h3>
+                <h3 className="text-sm font-bold leading-tight">SkyPrime Support</h3>
                 <p className="text-[11px] text-blue-100 flex items-center gap-1.5 mt-0.5">
                   <span
                     className={`w-2 h-2 rounded-full ${
@@ -325,7 +325,7 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
               <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50">
                 {/* Welcome Card */}
                 <div className="p-3.5 rounded-2xl bg-white border border-slate-200 text-xs text-slate-700 shadow-sm leading-relaxed">
-                  <p className="font-semibold text-slate-900 mb-1">Welcome to ShipNGo Support! 👋</p>
+                  <p className="font-semibold text-slate-900 mb-1">Welcome to SkyPrime Support! 👋</p>
                   <p>How can we assist you with your package tracking, rates, or delivery dispatch today?</p>
                 </div>
 
@@ -346,7 +346,7 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
                           {isGuest ? (
                             <span>You</span>
                           ) : (
-                            <span className="font-semibold text-blue-600">ShipNGo Support</span>
+                            <span className="font-semibold text-blue-600">SkyPrime Support</span>
                           )}
                           {msg.created_at && (
                             <span>

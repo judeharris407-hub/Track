@@ -21,7 +21,7 @@ export default function AboutPage() {
         {/* Header Hero */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-100">
-            About ShipNGo
+            About SkyPrime Logistics
           </span>
           <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
             A modern logistics company built for smart, reliable delivery.
@@ -46,7 +46,7 @@ export default function AboutPage() {
 
             <div className="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
               <p>
-                ShipNGo was founded to eliminate the uncertainty and delays that often plague parcel delivery and freight transportation. By focusing on real-time tracking, reliable transit times, and dedicated customer support, we established ourselves as a dependable logistics partner for individuals and growing businesses.
+                SkyPrime Logistics was founded to eliminate the uncertainty and delays that often plague parcel delivery and freight transportation. By focusing on real-time tracking, reliable transit times, and dedicated customer support, we established ourselves as a dependable logistics partner for individuals and growing businesses.
               </p>
               <p>
                 From humble beginnings as an express urban courier, we expanded into multi-channel regional distribution, bonded warehousing, and international air and ocean cargo forwarding.
@@ -146,7 +146,7 @@ export default function AboutPage() {
             Ready to partner with a modern logistics provider?
           </h3>
           <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto">
-            Experience the difference of transparent, dependable parcel delivery with ShipNGo.
+            Experience the difference of transparent, dependable parcel delivery with SkyPrime Logistics.
           </p>
           <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <Link

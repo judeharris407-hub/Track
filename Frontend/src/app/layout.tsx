@@ -3,8 +3,8 @@ import './globals.css';
 import TawkChat from '@/components/TawkChat';
 
 export const metadata: Metadata = {
-  title: 'ShipNGo | Trusted Courier & Real-Time Tracking Logistics',
-  description: 'Fast, affordable, and dependable courier service with real-time GPS tracking and live customer support.',
+  title: 'SkyPrime Logistics | Global Freight & Supply Chain Solutions',
+  description: 'Precision line-haul courier services, real-time GPS telemetry, and automated milestone verification engineered to keep your supply chain moving seamlessly.',
 };
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen bg-white text-slate-900 selection:bg-blue-500 selection:text-white">
+      <body className="antialiased min-h-screen bg-white text-slate-900 selection:bg-blue-600 selection:text-white">
         {children}
         <TawkChat />
       </body>

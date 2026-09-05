@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, ArrowRight, AlertCircle, Package, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, ArrowRight, AlertCircle, ShieldCheck } from 'lucide-react';
 import { useAuth } from '@/lib/authContext';
+import SkyPrimeLogo from '@/components/SkyPrimeLogo';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('admin@enterprise.com');
@@ -41,14 +42,13 @@ export default function AdminLoginPage() {
 
       <div className="w-full max-w-md relative z-10">
         {/* Brand Heading */}
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2.5 mb-3 group">
-            <div className="w-11 h-11 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-600/30 group-hover:scale-105 transition-transform">
-              <Package className="w-6 h-6" />
-            </div>
-            <span className="text-2xl font-black text-white tracking-tight">
-              Ship<span className="text-blue-500">N</span>Go
-            </span>
+        <div className="text-center mb-8 flex flex-col items-center">
+          <Link href="/" className="inline-flex items-center justify-center mb-4 group">
+            <SkyPrimeLogo
+              className="h-12 w-auto"
+              textColor="text-white"
+              subTextColor="text-blue-400"
+            />
           </Link>
           <h1 className="text-2xl font-extrabold text-white">Enterprise Admin Login</h1>
           <p className="text-xs text-slate-400 mt-1">

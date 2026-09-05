@@ -108,7 +108,7 @@ export default function ServicesPage() {
             Reliable services tailored for your shipping needs.
           </h1>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            From local express courier parcel deliveries to worldwide air and ocean freight, ShipNGo delivers with precision, speed, and transparency.
+            From local express courier parcel deliveries to worldwide air and ocean freight, SkyPrime Logistics delivers with precision, speed, and transparency.
           </p>
         </div>
 
