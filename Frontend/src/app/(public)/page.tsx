@@ -37,11 +37,7 @@ export default function PublicLandingPage() {
     router.push(`/track/${encodeURIComponent(trackingNumber.trim().toUpperCase())}`);
   };
 
-  const setSampleTracking = (sampleId: string) => {
-    setTrackingNumber(sampleId);
-    setError('');
-    router.push(`/track/${encodeURIComponent(sampleId)}`);
-  };
+
 
   const openTawkChat = () => {
     if (typeof window !== 'undefined' && (window as any).Tawk_API?.maximize) {
@@ -168,7 +164,7 @@ export default function PublicLandingPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 mb-4">
+          <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
               <Search className="w-4 h-4 text-slate-400 absolute left-4 top-3.5 pointer-events-none" />
               <input
@@ -189,22 +185,7 @@ export default function PublicLandingPage() {
             </button>
           </form>
 
-          {error && <p className="text-xs text-rose-600 font-semibold mb-2">{error}</p>}
-
-          {/* Quick-Pick Pills */}
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
-            <span className="text-[11px] font-semibold text-slate-400">Quick Test:</span>
-            {['TRK123456789', 'TRK987654321', 'TRK-1001'].map((sample) => (
-              <button
-                key={sample}
-                type="button"
-                onClick={() => setSampleTracking(sample)}
-                className="px-2.5 py-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 font-mono text-xs font-semibold rounded-lg transition-all cursor-pointer"
-              >
-                {sample}
-              </button>
-            ))}
-          </div>
+          {error && <p className="text-xs text-rose-600 font-semibold mt-3">{error}</p>}
         </div>
       </section>
 
