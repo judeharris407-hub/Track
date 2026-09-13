@@ -8,8 +8,8 @@ import { useAuth } from '@/lib/authContext';
 import SkyPrimeLogo from '@/components/SkyPrimeLogo';
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState('admin@enterprise.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@enterprise.com"
+                  placeholder="name@skyprimelogistics.com"
                   className="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700/70 rounded-xl text-white text-xs placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -100,25 +100,10 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
-            {/* Quick Demo Pre-fill helper */}
-            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-[11px] text-blue-300 flex items-center justify-between">
-              <span>Demo: admin@enterprise.com / admin123</span>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('admin@enterprise.com');
-                  setPassword('admin123');
-                }}
-                className="text-xs font-bold text-white underline hover:text-blue-200"
-              >
-                Fill Credentials
-              </button>
-            </div>
-
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 px-4 rounded-xl font-bold text-xs bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50"
+              className="w-full py-3.5 px-4 rounded-xl font-bold text-xs bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
