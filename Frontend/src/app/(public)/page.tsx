@@ -12,7 +12,6 @@ import {
   Mail,
   ArrowRight,
   CheckCircle2,
-  SendHorizontal,
   MessageSquare,
   ExternalLink,
   ChevronRight,
@@ -630,11 +629,11 @@ export default function PublicLandingPage() {
                 24/7 Multi-Channel Support
               </h2>
               <p className="text-blue-100 text-xs sm:text-sm max-w-xl mx-auto drop-shadow-sm">
-                Connect instantly with our dedicated support agents via Live Web Chat, official WhatsApp, Telegram bot, or direct email.
+                Connect instantly with our dedicated support agents via Live Web Chat, official WhatsApp, or direct email.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
               {/* 1. Live Chat */}
               <button
                 type="button"
@@ -676,29 +675,7 @@ export default function PublicLandingPage() {
                 </span>
               </a>
 
-              {/* 3. Telegram */}
-              <a
-                href="https://t.me/SkyPrimeSupportBot?start=support"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-sky-900/70 border border-sky-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
-              >
-                <div className="space-y-2">
-                  <div className="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center shadow-md">
-                    <SendHorizontal className="w-5 h-5 ml-0.5" />
-                  </div>
-                  <h4 className="text-sm font-bold flex items-center gap-1">
-                    Telegram Bot
-                    <ExternalLink className="w-3 h-3 opacity-70" />
-                  </h4>
-                  <p className="text-sky-100 text-[11px] font-mono">@SkyPrimeSupportBot</p>
-                </div>
-                <span className="text-[11px] font-bold text-sky-200 group-hover:underline">
-                  Open Telegram &rarr;
-                </span>
-              </a>
-
-              {/* 4. Email */}
+              {/* 3. Email */}
               <a
                 href="mailto:support@skyprimelogistics.com"
                 className="bg-blue-900/70 border border-white/20 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"

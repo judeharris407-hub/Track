@@ -3,8 +3,13 @@ import './globals.css';
 import TawkChat from '@/components/TawkChat';
 
 export const metadata: Metadata = {
-  title: 'SkyPrime Logistics | Global Freight & Supply Chain Solutions',
+  title: 'SkyPrime Logistics | Enterprise Tracking & Global Freight',
   description: 'Precision line-haul courier services, real-time GPS telemetry, and automated milestone verification engineered to keep your supply chain moving seamlessly.',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

@@ -11,7 +11,6 @@ import {
   Minimize2,
   ExternalLink,
   Phone,
-  SendHorizontal,
   Wifi,
   WifiOff,
 } from 'lucide-react';
@@ -34,7 +33,7 @@ interface ChatWidgetProps {
 
 export default function ChatWidget({ trackingNumber = null, defaultOpen = false }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const [activeTab, setActiveTab] = useState<'web' | 'whatsapp' | 'telegram'>('web');
+  const [activeTab, setActiveTab] = useState<'web' | 'whatsapp'>('web');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [guestId, setGuestId] = useState<string>('');
@@ -44,17 +43,15 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
   const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // WhatsApp & Telegram configuration (with fallbacks)
+  // WhatsApp configuration (with fallback)
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+14155238886';
   const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
-  const telegramBotUsername = process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || 'SkyPrimeSupportBot';
 
   const defaultSupportMessage = trackingNumber
     ? `Hello SkyPrime Support, I need assistance with my tracking number: ${trackingNumber}`
     : 'Hello SkyPrime Support, I need assistance with my package.';
 
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(defaultSupportMessage)}`;
-  const telegramUrl = `https://t.me/${telegramBotUsername}?start=${encodeURIComponent(trackingNumber || 'support')}`;
 
   // Initialize guest ID
   useEffect(() => {
@@ -269,7 +266,7 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
             </div>
           </div>
 
-          {/* Multi-Channel Tabs (Web Chat, WhatsApp, Telegram) */}
+          {/* Multi-Channel Tabs (Web Chat, WhatsApp) */}
           <div className="bg-slate-100 px-3 pt-2 pb-1 border-b border-slate-200 flex gap-2">
             <button
               onClick={() => setActiveTab('web')}
@@ -293,18 +290,6 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
             >
               <Phone className="w-3.5 h-3.5" />
               <span>WhatsApp</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('telegram')}
-              className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                activeTab === 'telegram'
-                  ? 'bg-sky-500 text-white shadow-sm'
-                  : 'text-sky-600 hover:bg-sky-50'
-              }`}
-            >
-              <SendHorizontal className="w-3.5 h-3.5" />
-              <span>Telegram</span>
             </button>
           </div>
 
@@ -423,39 +408,6 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
               >
                 <Phone className="w-4 h-4" />
                 <span>Open WhatsApp Chat</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          )}
-
-          {/* Tab 3: Telegram Channel Card */}
-          {activeTab === 'telegram' && (
-            <div className="flex-1 p-6 flex flex-col justify-between bg-gradient-to-b from-sky-50/50 to-white text-center">
-              <div className="space-y-4 pt-4">
-                <div className="w-16 h-16 rounded-full bg-sky-500 text-white flex items-center justify-center mx-auto shadow-lg shadow-sky-500/30">
-                  <SendHorizontal className="w-8 h-8 ml-0.5" />
-                </div>
-                <div>
-                  <h4 className="text-base font-bold text-slate-900">Chat on Telegram</h4>
-                  <p className="text-xs text-slate-600 mt-1 max-w-xs mx-auto leading-relaxed">
-                    Get instant dispatch updates and live assistance through our Telegram Support Bot.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-white border border-sky-200 rounded-2xl text-xs text-sky-900 text-left space-y-1 shadow-sm">
-                  <p className="font-semibold">Telegram Bot:</p>
-                  <p className="font-mono text-slate-700">@{telegramBotUsername}</p>
-                </div>
-              </div>
-
-              <a
-                href={telegramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 px-4 rounded-2xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-sky-500/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <SendHorizontal className="w-4 h-4" />
-                <span>Open Telegram Bot</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
