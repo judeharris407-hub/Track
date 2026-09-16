@@ -44,14 +44,14 @@ export default function ChatWidget({ trackingNumber = null, defaultOpen = false 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // WhatsApp configuration (with fallback)
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+14155238886';
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+1 (218) 201-2628';
   const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
 
   const defaultSupportMessage = trackingNumber
-    ? `Hello SkyPrime Support, I need assistance with my tracking number: ${trackingNumber}`
-    : 'Hello SkyPrime Support, I need assistance with my package.';
+    ? `Hello SkyPrime Logistics Support, I need assistance with my tracking number: ${trackingNumber}`
+    : 'Hello SkyPrime Logistics Support';
 
-  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(defaultSupportMessage)}`;
+  const whatsappUrl = `https://wa.me/${cleanPhone || '12182012628'}?text=${encodeURIComponent(defaultSupportMessage)}`;
 
   // Initialize guest ID
   useEffect(() => {

@@ -3,6 +3,7 @@ import {
   updateParcelStatus as updateParcelStatusService,
   getAllParcels as getAllParcelsService,
 } from '../../services/parcelService.js';
+import { sendParcelStatusEmail } from '../../services/emailService.js';
 
 /**
  * Creates a new parcel
@@ -104,6 +105,19 @@ export const updateStatus = async (req, res, next) => {
     if (io) {
       io.to(`track_${updatedParcel.tracking_number}`).emit('tracking_update', updatedParcel);
       io.emit('admin_parcel_updated', updatedParcel);
+    }
+
+    // Trigger automated email notification via Resend if recipient email exists
+    try {
+      if (updatedParcel && updatedParcel.recipient_email) {
+        await sendParcelStatusEmail(updatedParcel, location, description);
+      }
+    } catch (emailError) {
+      console.error(
+        `[EmailNotificationError] Failed to send status update email for parcel ${updatedParcel.tracking_number}:`,
+        emailError.message || emailError
+      );
+      // Gracefully continue without failing the HTTP response
     }
 
     return res.status(200).json({

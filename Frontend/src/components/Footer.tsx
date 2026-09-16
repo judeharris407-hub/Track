@@ -58,11 +58,11 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-xs">
               <li className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-blue-400" />
-                <a href="tel:+18005927447" className="hover:text-white font-mono">+1 (800) 592-7447</a>
+                <a href="tel:+12182012628" className="hover:text-white font-mono">+1 (218) 201-2628</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-blue-400" />
-                <a href="mailto:support@skyprimelogistics.com" className="hover:text-white font-mono">support@skyprimelogistics.com</a>
+                <a href="mailto:support@skyprime-logistics.com" className="hover:text-white font-mono">support@skyprime-logistics.com</a>
               </li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Help Desk</Link></li>
               <li><Link href="/admin/login" className="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Admin Portal</Link></li>

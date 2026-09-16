@@ -173,10 +173,10 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <span className="text-[11px] text-slate-400 font-semibold block uppercase tracking-wider">
-                      Phone Number
+                      Phone Number (Call / WhatsApp)
                     </span>
-                    <a href="tel:+18005927447" className="text-sm font-bold text-slate-900 hover:text-blue-600 font-mono">
-                      +1 (800) 592-7447
+                    <a href="tel:+12182012628" className="text-sm font-bold text-slate-900 hover:text-blue-600 font-mono">
+                      +1 (218) 201-2628
                     </a>
                   </div>
                 </li>
@@ -189,8 +189,8 @@ export default function ContactPage() {
                     <span className="text-[11px] text-slate-400 font-semibold block uppercase tracking-wider">
                       Support Email
                     </span>
-                    <a href="mailto:support@skyprimelogistics.com" className="text-sm font-bold text-slate-900 hover:text-blue-600 font-mono">
-                      support@skyprimelogistics.com
+                    <a href="mailto:support@skyprime-logistics.com" className="text-sm font-bold text-slate-900 hover:text-blue-600 font-mono">
+                      support@skyprime-logistics.com
                     </a>
                   </div>
                 </li>

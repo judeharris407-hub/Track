@@ -655,7 +655,7 @@ export default function PublicLandingPage() {
 
               {/* 2. WhatsApp */}
               <a
-                href="https://wa.me/237680650832?text=Hello%20SkyPrime%20Logistics%20Support,%20I%20need%20assistance%20with%20my%20shipment."
+                href="https://wa.me/12182012628?text=Hello%20SkyPrime%20Logistics%20Support"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-emerald-900/70 border border-emerald-400/40 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
@@ -668,7 +668,7 @@ export default function PublicLandingPage() {
                     WhatsApp Support
                     <ExternalLink className="w-3 h-3 opacity-70" />
                   </h4>
-                  <p className="text-emerald-100 text-[11px] font-mono">+237 680 650 832</p>
+                  <p className="text-emerald-100 text-[11px] font-mono">+1 (218) 201-2628</p>
                 </div>
                 <span className="text-[11px] font-bold text-emerald-300 group-hover:underline">
                   Open WhatsApp &rarr;
@@ -677,7 +677,7 @@ export default function PublicLandingPage() {
 
               {/* 3. Email */}
               <a
-                href="mailto:support@skyprimelogistics.com"
+                href="mailto:support@skyprime-logistics.com"
                 className="bg-blue-900/70 border border-white/20 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between space-y-3 hover:scale-105 transition-transform shadow-lg group text-white text-left"
               >
                 <div className="space-y-2">
@@ -685,7 +685,7 @@ export default function PublicLandingPage() {
                     <Mail className="w-5 h-5" />
                   </div>
                   <h4 className="text-sm font-bold">Email Support</h4>
-                  <p className="text-blue-100 text-[11px] font-mono">support@skyprimelogistics.com</p>
+                  <p className="text-blue-100 text-[11px] font-mono">support@skyprime-logistics.com</p>
                 </div>
                 <span className="text-[11px] font-bold text-blue-200 group-hover:underline">
                   Send Email &rarr;
