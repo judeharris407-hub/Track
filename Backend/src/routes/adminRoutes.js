@@ -3,6 +3,7 @@ import { login, register } from '../controllers/admin/adminAuthController.js';
 import {
   createParcel,
   updateStatus,
+  updateLocation,
   listParcels,
 } from '../controllers/admin/adminParcelController.js';
 import {
@@ -10,6 +11,7 @@ import {
   getThreadDetails,
   updateThreadStatus,
 } from '../controllers/admin/adminChatController.js';
+import { geocodeAddress } from '../controllers/admin/adminGeocodeController.js';
 import { authenticateToken } from '../middleware/authMiddleware.js';
 import { authRateLimiter } from '../middleware/rateLimiter.js';
 
@@ -31,6 +33,12 @@ router.post('/parcels', authenticateToken, createParcel);
 
 // Update parcel status & checkpoint event
 router.put('/parcels/:id/status', authenticateToken, updateStatus);
+
+// Update parcel coordinate location & route history
+router.put('/parcels/:id/location', authenticateToken, updateLocation);
+
+// Geocode location search (OpenStreetMap Nominatim proxy)
+router.get('/geocode', authenticateToken, geocodeAddress);
 
 // ================= LIVE CHAT MANAGEMENT =================
 // List chat threads (supports ?status=open|closed)

@@ -7,9 +7,10 @@ const { Pool } = pg;
 
 const isProduction = process.env.NODE_ENV === 'production';
 const databaseUrl = process.env.DATABASE_URL;
+const isLocal = !databaseUrl || databaseUrl.includes('localhost') || databaseUrl.includes('127.0.0.1');
 
-// SSL configuration for cloud databases (Neon, Supabase, etc.) and production environments
-const ssl = isProduction || (databaseUrl && (databaseUrl.includes('sslmode=require') || databaseUrl.includes('neon.tech') || databaseUrl.includes('supabase')))
+// SSL configuration for cloud databases (Neon, Supabase, Render, AWS, etc.) and production environments
+const ssl = !isLocal && (isProduction || (databaseUrl && (databaseUrl.includes('sslmode=require') || databaseUrl.includes('neon.tech') || databaseUrl.includes('supabase') || databaseUrl.includes('render.com') || databaseUrl.includes('amazonaws.com'))))
   ? { rejectUnauthorized: false }
   : (process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false);
 

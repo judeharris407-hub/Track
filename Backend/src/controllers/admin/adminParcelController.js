@@ -1,6 +1,7 @@
 import {
   createParcel as createParcelService,
   updateParcelStatus as updateParcelStatusService,
+  updateParcelLocation as updateParcelLocationService,
   getAllParcels as getAllParcelsService,
 } from '../../services/parcelService.js';
 import { sendParcelStatusEmail } from '../../services/emailService.js';
@@ -17,12 +18,22 @@ export const createParcel = async (req, res, next) => {
       sender_email,
       origin,
       origin_hub,
+      origin_lat,
+      origin_lng,
       recipient_name,
       recipient_phone,
       recipient_email,
       destination,
       destination_address,
+      destination_lat,
+      destination_lng,
       current_location,
+      current_lat,
+      current_lng,
+      route_history,
+      departure_time,
+      estimated_arrival_time,
+      shipment_type,
       estimated_delivery,
       status,
     } = req.body;
@@ -46,12 +57,22 @@ export const createParcel = async (req, res, next) => {
         sender_email,
         origin: originVal,
         origin_hub: originVal,
+        origin_lat,
+        origin_lng,
         recipient_name,
         recipient_phone,
         recipient_email,
         destination: destVal,
         destination_address: destVal,
+        destination_lat,
+        destination_lng,
         current_location,
+        current_lat,
+        current_lng,
+        route_history,
+        departure_time,
+        estimated_arrival_time,
+        shipment_type: shipment_type || 'LAND',
         estimated_delivery,
         status,
       },
@@ -81,7 +102,7 @@ export const createParcel = async (req, res, next) => {
 export const updateStatus = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { status, location, description } = req.body;
+    const { status, location, description, lat, lng, current_lat, current_lng } = req.body;
 
     if (!status || !location) {
       return res.status(400).json({
@@ -91,13 +112,17 @@ export const updateStatus = async (req, res, next) => {
     }
 
     const userId = req.user?.id || null;
+    const coords = (lat !== undefined && lng !== undefined) 
+      ? { lat, lng } 
+      : (current_lat !== undefined && current_lng !== undefined ? { lat: current_lat, lng: current_lng } : null);
 
     const updatedParcel = await updateParcelStatusService(
       id,
       status,
       location,
       description,
-      userId
+      userId,
+      coords
     );
 
     // Broadcast tracking event update to subscribed room & admin subscribers
@@ -123,6 +148,70 @@ export const updateStatus = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: 'Parcel status updated successfully.',
+      data: updatedParcel,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Updates parcel location coordinates & adds checkpoint to route history
+ * PUT /api/v1/admin/parcels/:id/location
+ */
+export const updateLocation = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      lat,
+      lng,
+      current_lat,
+      current_lng,
+      location,
+      status,
+      description,
+      departure_time,
+      estimated_arrival_time,
+      shipment_type,
+    } = req.body;
+
+    const chosenLat = lat !== undefined ? lat : current_lat;
+    const chosenLng = lng !== undefined ? lng : current_lng;
+
+    if (chosenLat === undefined || chosenLng === undefined || chosenLat === null || chosenLng === null || chosenLat === '' || chosenLng === '') {
+      return res.status(400).json({
+        success: false,
+        message: 'lat and lng coordinates are required.',
+      });
+    }
+
+    const userId = req.user?.id || null;
+
+    const updatedParcel = await updateParcelLocationService(
+      id,
+      {
+        lat: chosenLat,
+        lng: chosenLng,
+        location,
+        status,
+        description,
+        departure_time,
+        estimated_arrival_time,
+        shipment_type,
+      },
+      userId
+    );
+
+    // Broadcast live map tracking update to customer room and admin dashboard
+    const io = req.app.get('io');
+    if (io) {
+      io.to(`track_${updatedParcel.tracking_number}`).emit('tracking_update', updatedParcel);
+      io.emit('admin_parcel_updated', updatedParcel);
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Parcel coordinates and route history updated successfully.',
       data: updatedParcel,
     });
   } catch (error) {
@@ -159,5 +248,6 @@ export const listParcels = async (req, res, next) => {
 export default {
   createParcel,
   updateStatus,
+  updateLocation,
   listParcels,
 };

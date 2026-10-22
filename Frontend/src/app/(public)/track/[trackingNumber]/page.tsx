@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import {
   MapPin,
   Clock,
@@ -19,15 +20,28 @@ import {
   Mail,
   User,
   Building2,
+  Compass,
 } from 'lucide-react';
 import api from '@/lib/api';
 import socket from '@/lib/socket';
 import TawkChat from '@/components/TawkChat';
 
+const ParcelMap = dynamic(() => import('@/components/ParcelMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[380px] sm:h-[460px] rounded-3xl bg-slate-900 border border-slate-800 flex flex-col items-center justify-center text-slate-400 animate-pulse font-mono text-xs gap-3">
+      <div className="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+      <span>Connecting to live satellite tracking...</span>
+    </div>
+  ),
+});
+
 interface ParcelEvent {
   id: number;
   status: string;
   location: string;
+  lat?: number | null;
+  lng?: number | null;
   description: string;
   created_at: string;
 }
@@ -42,9 +56,19 @@ interface Parcel {
   recipient_phone?: string;
   recipient_email?: string;
   origin: string;
+  origin_lat?: number | null;
+  origin_lng?: number | null;
   destination: string;
+  destination_lat?: number | null;
+  destination_lng?: number | null;
   status: string;
   current_location: string;
+  current_lat?: number | null;
+  current_lng?: number | null;
+  route_history?: any[];
+  shipment_type?: string;
+  departure_time?: string | null;
+  estimated_arrival_time?: string | null;
   estimated_delivery: string | null;
   created_at: string;
   updated_at: string;
@@ -400,6 +424,37 @@ export default function TrackingDetailsPage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Interactive Live Route & Checkpoint Map */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between px-1">
+              <div className="flex items-center gap-2">
+                <Compass className="w-5 h-5 text-blue-600" />
+                <h2 className="text-lg font-bold text-slate-900">Live Interactive Route Map</h2>
+              </div>
+              <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>Active Radar</span>
+              </span>
+            </div>
+
+            <ParcelMap
+              origin={parcel.origin}
+              origin_lat={parcel.origin_lat}
+              origin_lng={parcel.origin_lng}
+              destination={parcel.destination}
+              destination_lat={parcel.destination_lat}
+              destination_lng={parcel.destination_lng}
+              current_location={parcel.current_location}
+              current_lat={parcel.current_lat}
+              current_lng={parcel.current_lng}
+              status={parcel.status}
+              route_history={parcel.route_history}
+              shipment_type={parcel.shipment_type}
+              departure_time={parcel.departure_time}
+              estimated_arrival_time={parcel.estimated_arrival_time}
+            />
           </div>
 
           {/* Polished Vertical Checkpoint Timeline */}

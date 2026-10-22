@@ -33,9 +33,19 @@ export const initDb = async () => {
         recipient_phone VARCHAR(50),
         recipient_email VARCHAR(150),
         origin VARCHAR(100) NOT NULL,
+        origin_lat DOUBLE PRECISION,
+        origin_lng DOUBLE PRECISION,
         destination VARCHAR(100) NOT NULL,
+        destination_lat DOUBLE PRECISION,
+        destination_lng DOUBLE PRECISION,
         status VARCHAR(50) DEFAULT 'Pending',
         current_location VARCHAR(100),
+        current_lat DOUBLE PRECISION,
+        current_lng DOUBLE PRECISION,
+        route_history JSONB DEFAULT '[]'::jsonb,
+        departure_time TIMESTAMP,
+        estimated_arrival_time TIMESTAMP,
+        shipment_type VARCHAR(20) DEFAULT 'LAND',
         estimated_delivery TIMESTAMP,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -48,6 +58,16 @@ export const initDb = async () => {
       ALTER TABLE parcels ADD COLUMN IF NOT EXISTS sender_email VARCHAR(150);
       ALTER TABLE parcels ADD COLUMN IF NOT EXISTS recipient_phone VARCHAR(50);
       ALTER TABLE parcels ADD COLUMN IF NOT EXISTS recipient_email VARCHAR(150);
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS origin_lat DOUBLE PRECISION;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS origin_lng DOUBLE PRECISION;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS destination_lat DOUBLE PRECISION;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS destination_lng DOUBLE PRECISION;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS current_lat DOUBLE PRECISION;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS current_lng DOUBLE PRECISION;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS route_history JSONB DEFAULT '[]'::jsonb;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS departure_time TIMESTAMP;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS estimated_arrival_time TIMESTAMP;
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS shipment_type VARCHAR(20) DEFAULT 'LAND';
     `);
 
     // 3. parcel_events table
@@ -57,10 +77,17 @@ export const initDb = async () => {
         parcel_id INT REFERENCES parcels(id) ON DELETE CASCADE,
         status VARCHAR(50) NOT NULL,
         location VARCHAR(100) NOT NULL,
+        lat DOUBLE PRECISION,
+        lng DOUBLE PRECISION,
         description TEXT,
         created_by INT REFERENCES system_users(id),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+    `);
+
+    await query(`
+      ALTER TABLE parcel_events ADD COLUMN IF NOT EXISTS lat DOUBLE PRECISION;
+      ALTER TABLE parcel_events ADD COLUMN IF NOT EXISTS lng DOUBLE PRECISION;
     `);
 
     // 4. chat_threads table

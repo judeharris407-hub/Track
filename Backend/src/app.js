@@ -16,6 +16,9 @@ dotenv.config();
 
 const app = express();
 
+// Trust reverse proxy headers (Render, Vercel, Railway, Cloudflare, etc.)
+app.set('trust proxy', 1);
+
 // Parse strict allowed origins from process.env.ALLOWED_ORIGINS (default: http://localhost:3000)
 const rawOrigins =
   process.env.ALLOWED_ORIGINS ||
@@ -70,6 +73,10 @@ app.use('/api/v1/public', publicRoutes);
 app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/track', trackingRoutes);
 app.use('/api/v1/webhooks', webhookRoutes);
+
+// Compatibility aliases for /api/parcels and /api/admin
+app.use('/api/admin', adminRoutes);
+app.use('/api', adminRoutes);
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
