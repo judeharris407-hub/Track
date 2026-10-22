@@ -555,9 +555,10 @@ export default function AdminDashboardPage() {
 
       {/* CREATE PARCEL MODAL WITH AUTOMATED GEOCODING & ROUTE CONFIG */}
       {isCreateModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
-          <div className="glass-card w-full max-w-2xl p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl relative my-8">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="glass-card w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl relative my-auto">
+            {/* Pinned Modal Header */}
+            <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-slate-800 shrink-0 bg-slate-900/95 backdrop-blur-md">
               <div>
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
                   <Plus className="w-5 h-5 text-indigo-400" />
@@ -569,62 +570,64 @@ export default function AdminDashboardPage() {
               </div>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white"
+                className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateParcel} className="space-y-6">
-              {/* SHIPMENT MODE SELECTOR */}
-              <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2.5">
-                <label className="block text-[11px] font-semibold text-slate-300">
-                  Shipment Mode & Transit Channel *
-                </label>
-                <div className="grid grid-cols-3 gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => setNewShipmentType('LAND')}
-                    className={`p-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                      newShipmentType === 'LAND'
-                        ? 'bg-blue-600 border-blue-400 text-white shadow-lg shadow-blue-600/30 ring-2 ring-blue-500/30'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Truck className="w-4 h-4" />
-                    <span>LAND (Highway)</span>
-                    <span className="text-[9px] font-normal opacity-80">OSRM Road Router</span>
-                  </button>
+            {/* Scrollable Form Body Container */}
+            <form onSubmit={handleCreateParcel} className="flex flex-col flex-1 overflow-hidden">
+              <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-6 space-y-6 custom-scrollbar pr-3 sm:pr-4">
+                {/* SHIPMENT MODE SELECTOR */}
+                <div className="p-4 pt-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+                  <label className="block text-[11px] font-semibold text-slate-300">
+                    Shipment Mode & Transit Channel *
+                  </label>
+                  <div className="grid grid-cols-3 gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => setNewShipmentType('LAND')}
+                      className={`p-3.5 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
+                        newShipmentType === 'LAND'
+                          ? 'bg-blue-600 border-blue-400 text-white shadow-lg shadow-blue-600/30 ring-2 ring-blue-500/30'
+                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      <Truck className="w-4 h-4" />
+                      <span>LAND (Highway)</span>
+                      <span className="text-[9px] font-normal opacity-80">OSRM Road Router</span>
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setNewShipmentType('AIR')}
-                    className={`p-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                      newShipmentType === 'AIR'
-                        ? 'bg-sky-600 border-sky-400 text-white shadow-lg shadow-sky-600/30 ring-2 ring-sky-500/30'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Plane className="w-4 h-4" />
-                    <span>AIR (Express)</span>
-                    <span className="text-[9px] font-normal opacity-80">Great-Circle Arc</span>
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewShipmentType('AIR')}
+                      className={`p-3.5 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
+                        newShipmentType === 'AIR'
+                          ? 'bg-sky-600 border-sky-400 text-white shadow-lg shadow-sky-600/30 ring-2 ring-sky-500/30'
+                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      <Plane className="w-4 h-4" />
+                      <span>AIR (Express)</span>
+                      <span className="text-[9px] font-normal opacity-80">Great-Circle Arc</span>
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setNewShipmentType('SEA')}
-                    className={`p-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
-                      newShipmentType === 'SEA'
-                        ? 'bg-teal-600 border-teal-400 text-white shadow-lg shadow-teal-600/30 ring-2 ring-teal-500/30'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Ship className="w-4 h-4" />
-                    <span>SEA (Marine)</span>
-                    <span className="text-[9px] font-normal opacity-80">Shipping Lanes</span>
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewShipmentType('SEA')}
+                      className={`p-3.5 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
+                        newShipmentType === 'SEA'
+                          ? 'bg-teal-600 border-teal-400 text-white shadow-lg shadow-teal-600/30 ring-2 ring-teal-500/30'
+                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      <Ship className="w-4 h-4" />
+                      <span>SEA (Marine)</span>
+                      <span className="text-[9px] font-normal opacity-80">Shipping Lanes</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
 
               {/* SENDER & ORIGIN DETAILS WITH AUTO-GEOCODING */}
               <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3.5">
@@ -811,7 +814,10 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-4 border-t border-slate-800">
+              </div>
+
+              {/* Pinned Sticky Footer Actions */}
+              <div className="flex justify-end gap-2.5 px-6 sm:px-8 py-4 border-t border-slate-800 shrink-0 bg-slate-900/95 backdrop-blur-md">
                 <button
                   type="button"
                   onClick={() => setIsCreateModalOpen(false)}
@@ -834,9 +840,10 @@ export default function AdminDashboardPage() {
 
       {/* UPDATE CHECKPOINT MODAL WITH AUTO-GEOCODING */}
       {isUpdateModalOpen && selectedParcel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="glass-card w-full max-w-md p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="glass-card w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl relative my-auto">
+            {/* Pinned Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 shrink-0 bg-slate-900/95 backdrop-blur-md">
               <div>
                 <h3 className="text-base font-bold text-white">Log Checkpoint Milestone</h3>
                 <span className="text-xs font-mono text-indigo-400 font-bold">
@@ -845,72 +852,75 @@ export default function AdminDashboardPage() {
               </div>
               <button
                 onClick={() => setIsUpdateModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {selectedParcel.package_description && (
-              <div className="mb-4 p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-start gap-2.5 text-xs">
-                <Package className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <form onSubmit={handleUpdateStatus} className="flex flex-col flex-1 overflow-hidden">
+              <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 custom-scrollbar">
+                {selectedParcel.package_description && (
+                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-start gap-2.5 text-xs">
+                    <Package className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-slate-400 block">Manifest Cargo</span>
+                      <span className="text-slate-200 font-medium">{selectedParcel.package_description}</span>
+                    </div>
+                  </div>
+                )}
+
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-slate-400 block">Manifest Cargo</span>
-                  <span className="text-slate-200 font-medium">{selectedParcel.package_description}</span>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    Milestone Status
+                  </label>
+                  <select
+                    value={updateStatusVal}
+                    onChange={(e) => setUpdateStatusVal(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs font-semibold focus:ring-1 focus:ring-indigo-500"
+                  >
+                    <option value="Parcel Received">Parcel Received</option>
+                    <option value="In Transit">In Transit</option>
+                    <option value="Out for Delivery">Out for Delivery</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Exception / Delayed">Exception / Delayed</option>
+                  </select>
+                </div>
+
+                {/* Automatic Checkpoint Geocoding Address Input */}
+                <AddressGeocodeInput
+                  label="Current Location / Checkpoint Hub"
+                  value={updateLocationVal}
+                  onChange={setUpdateLocationVal}
+                  lat={updateLatVal}
+                  lng={updateLngVal}
+                  onCoordinatesChange={(lat, lng, name) => {
+                    setUpdateLatVal(lat.toString());
+                    setUpdateLngVal(lng.toString());
+                    if (name && !updateLocationVal) setUpdateLocationVal(name);
+                  }}
+                  onOpenMapPicker={() => openMapPicker('checkpoint')}
+                  placeholder="e.g. Chicago Regional Sorting Facility, IL..."
+                  required
+                  theme="blue"
+                />
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    Description / Inspection Notes
+                  </label>
+                  <textarea
+                    value={updateDescriptionVal}
+                    onChange={(e) => setUpdateDescriptionVal(e.target.value)}
+                    placeholder="Optional notes: customs clearance, sorting scan, loaded onto flight/vessel..."
+                    rows={2}
+                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500 resize-none"
+                  />
                 </div>
               </div>
-            )}
 
-            <form onSubmit={handleUpdateStatus} className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Milestone Status
-                </label>
-                <select
-                  value={updateStatusVal}
-                  onChange={(e) => setUpdateStatusVal(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs font-semibold focus:ring-1 focus:ring-indigo-500"
-                >
-                  <option value="Parcel Received">Parcel Received</option>
-                  <option value="In Transit">In Transit</option>
-                  <option value="Out for Delivery">Out for Delivery</option>
-                  <option value="Delivered">Delivered</option>
-                  <option value="Exception / Delayed">Exception / Delayed</option>
-                </select>
-              </div>
-
-              {/* Automatic Checkpoint Geocoding Address Input */}
-              <AddressGeocodeInput
-                label="Current Location / Checkpoint Hub"
-                value={updateLocationVal}
-                onChange={setUpdateLocationVal}
-                lat={updateLatVal}
-                lng={updateLngVal}
-                onCoordinatesChange={(lat, lng, name) => {
-                  setUpdateLatVal(lat.toString());
-                  setUpdateLngVal(lng.toString());
-                  if (name && !updateLocationVal) setUpdateLocationVal(name);
-                }}
-                onOpenMapPicker={() => openMapPicker('checkpoint')}
-                placeholder="e.g. Chicago Regional Sorting Facility, IL..."
-                required
-                theme="blue"
-              />
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Description / Inspection Notes
-                </label>
-                <textarea
-                  value={updateDescriptionVal}
-                  onChange={(e) => setUpdateDescriptionVal(e.target.value)}
-                  placeholder="Optional notes: customs clearance, sorting scan, loaded onto flight/vessel..."
-                  rows={2}
-                  className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700/70 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500 resize-none"
-                />
-              </div>
-
-              <div className="flex justify-end gap-2.5 pt-3 border-t border-slate-800">
+              {/* Pinned Footer */}
+              <div className="flex justify-end gap-2.5 px-6 py-4 border-t border-slate-800 shrink-0 bg-slate-900/95 backdrop-blur-md">
                 <button
                   type="button"
                   onClick={() => setIsUpdateModalOpen(false)}
