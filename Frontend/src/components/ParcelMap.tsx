@@ -73,7 +73,7 @@ export default function ParcelMap({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const [mapReady, setMapReady] = useState(false);
-  const [activeTileLayer, setActiveTileLayer] = useState<'voyager' | 'osm'>('voyager');
+  const [activeTileLayer, setActiveTileLayer] = useState<'streets' | 'osm'>('streets');
 
   const normalizedType = (shipment_type || 'LAND').toUpperCase();
   const isDelivered = status?.toUpperCase().includes('DELIVERED') || false;
@@ -154,13 +154,13 @@ export default function ParcelMap({
 
       // Tile layer
       const tileUrl =
-        activeTileLayer === 'voyager'
-          ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+        activeTileLayer === 'streets'
+          ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
           : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
       L.tileLayer(tileUrl, {
         maxZoom: 19,
-        subdomains: 'abcd',
+        attribution: activeTileLayer === 'streets' ? '&copy; Esri' : '&copy; OpenStreetMap contributors',
       }).addTo(map);
 
       const allBoundsPoints: [number, number][] = [];
@@ -548,9 +548,9 @@ export default function ParcelMap({
         </button>
 
         <button
-          onClick={() => setActiveTileLayer((prev) => (prev === 'voyager' ? 'osm' : 'voyager'))}
+          onClick={() => setActiveTileLayer((prev) => (prev === 'streets' ? 'osm' : 'streets'))}
           className="p-2.5 rounded-xl bg-white/95 hover:bg-white text-slate-700 hover:text-blue-600 shadow-lg border border-slate-200 transition-all active:scale-95 flex items-center justify-center cursor-pointer"
-          title={`Switch map view (current: ${activeTileLayer === 'voyager' ? 'Voyager Logistics' : 'OpenStreetMap'})`}
+          title={`Switch map view (current: ${activeTileLayer === 'streets' ? 'World Street Map' : 'OpenStreetMap'})`}
         >
           <Layers className="w-4 h-4" />
         </button>

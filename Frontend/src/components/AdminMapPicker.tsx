@@ -141,9 +141,9 @@ export default function AdminMapPicker({
         className="w-full h-full z-0"
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
           maxZoom={19}
-          subdomains="abcd"
+          attribution="&copy; Esri"
         />
 
         {/* Modal Animation Resize Controller */}
