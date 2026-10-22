@@ -62,6 +62,7 @@ interface Parcel {
   departure_time?: string | null;
   estimated_arrival_time?: string | null;
   estimated_delivery: string | null;
+  package_description?: string;
   created_at: string;
   event_count: number;
 }
@@ -96,6 +97,7 @@ export default function AdminDashboardPage() {
   const [newDestinationAddress, setNewDestinationAddress] = useState('');
   const [newDestLat, setNewDestLat] = useState('');
   const [newDestLng, setNewDestLng] = useState('');
+  const [newPackageDescription, setNewPackageDescription] = useState('');
 
   const [newShipmentType, setNewShipmentType] = useState<'LAND' | 'AIR' | 'SEA'>('LAND');
   const [newDepartureTime, setNewDepartureTime] = useState(() => new Date().toISOString().slice(0, 16));
@@ -228,6 +230,7 @@ export default function AdminDashboardPage() {
         departure_time: departureIso,
         estimated_arrival_time: arrivalIso,
         estimated_delivery: arrivalIso,
+        package_description: newPackageDescription,
         status: newStatus,
       });
 
@@ -246,6 +249,7 @@ export default function AdminDashboardPage() {
         setNewDestinationAddress('');
         setNewDestLat('');
         setNewDestLng('');
+        setNewPackageDescription('');
         setNewLocation('');
         setNewEstimatedDelivery('');
         setNewStatus('Parcel Received');
@@ -503,6 +507,11 @@ export default function AdminDashboardPage() {
                     <td className="px-5 py-4">
                       <div className="font-semibold text-white">{p.recipient_name}</div>
                       <div className="text-[11px] text-slate-400">From: {p.sender_name}</div>
+                      {p.package_description && (
+                        <div className="text-[10px] text-amber-400 font-medium truncate max-w-[200px] mt-0.5" title={p.package_description}>
+                          📦 {p.package_description}
+                        </div>
+                      )}
                     </td>
                     <td className="px-5 py-4">
                       <div className="text-slate-300 font-medium">{p.current_location || '—'}</div>
@@ -655,7 +664,7 @@ export default function AdminDashboardPage() {
                   {/* Automatic Origin Geocoding Address Input */}
                   <div className="sm:col-span-2">
                     <AddressGeocodeInput
-                      label="Origin Address / Departure Hub"
+                      label="Origin Address / Departure Hub *"
                       value={newOriginHub}
                       onChange={setNewOriginHub}
                       lat={newOriginLat}
@@ -691,28 +700,41 @@ export default function AdminDashboardPage() {
                       value={newRecipientName}
                       onChange={(e) => setNewRecipientName(e.target.value)}
                       placeholder="e.g. Sarah Jenkins"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-emerald-500"
                       required
                     />
                   </div>
 
                   <div>
                     <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-                      Recipient Email
+                      Recipient Phone
+                    </label>
+                    <input
+                      type="text"
+                      value={newRecipientPhone}
+                      onChange={(e) => setNewRecipientPhone(e.target.value)}
+                      placeholder="e.g. +1 (555) 987-6543"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                      Recipient Email (Optional notification address)
                     </label>
                     <input
                       type="email"
                       value={newRecipientEmail}
                       onChange={(e) => setNewRecipientEmail(e.target.value)}
                       placeholder="e.g. sarah.jenkins@example.com"
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-indigo-500"
+                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
 
                   {/* Automatic Destination Geocoding Address Input */}
                   <div className="sm:col-span-2">
                     <AddressGeocodeInput
-                      label="Destination Address / Port of Entry"
+                      label="Destination Address / Port of Entry *"
                       value={newDestinationAddress}
                       onChange={setNewDestinationAddress}
                       lat={newDestLat}
@@ -728,6 +750,30 @@ export default function AdminDashboardPage() {
                       theme="emerald"
                     />
                   </div>
+                </div>
+              </div>
+
+              {/* PACKAGE SPECIFICATION & CONSIGNMENT DESCRIPTION */}
+              <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3.5">
+                <div className="flex items-center gap-2 text-amber-400 font-bold text-xs">
+                  <Package className="w-4 h-4" />
+                  <span>Consignment & Package Specification</span>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                    Brief Description of Package / Consignment
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={newPackageDescription}
+                    onChange={(e) => setNewPackageDescription(e.target.value)}
+                    placeholder="e.g. 2x Sealed crates containing precision electronics, fragile cargo..."
+                    className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-white text-xs focus:ring-1 focus:ring-amber-500 resize-none placeholder:text-slate-600"
+                  />
+                  <span className="text-[10px] text-slate-500 block mt-1">
+                    Brief summary of items or handling instructions displayed on the recipient tracking manifest.
+                  </span>
                 </div>
               </div>
 
@@ -804,6 +850,16 @@ export default function AdminDashboardPage() {
                 <X className="w-5 h-5" />
               </button>
             </div>
+
+            {selectedParcel.package_description && (
+              <div className="mb-4 p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-start gap-2.5 text-xs">
+                <Package className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block">Manifest Cargo</span>
+                  <span className="text-slate-200 font-medium">{selectedParcel.package_description}</span>
+                </div>
+              </div>
+            )}
 
             <form onSubmit={handleUpdateStatus} className="space-y-4">
               <div>

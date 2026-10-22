@@ -35,6 +35,8 @@ export const createParcel = async (req, res, next) => {
       estimated_arrival_time,
       shipment_type,
       estimated_delivery,
+      package_description,
+      description,
       status,
     } = req.body;
 
@@ -74,6 +76,7 @@ export const createParcel = async (req, res, next) => {
         estimated_arrival_time,
         shipment_type: shipment_type || 'LAND',
         estimated_delivery,
+        package_description: package_description || description || null,
         status,
       },
       userId

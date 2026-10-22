@@ -47,6 +47,7 @@ export const initDb = async () => {
         estimated_arrival_time TIMESTAMP,
         shipment_type VARCHAR(20) DEFAULT 'LAND',
         estimated_delivery TIMESTAMP,
+        package_description TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
@@ -68,6 +69,7 @@ export const initDb = async () => {
       ALTER TABLE parcels ADD COLUMN IF NOT EXISTS departure_time TIMESTAMP;
       ALTER TABLE parcels ADD COLUMN IF NOT EXISTS estimated_arrival_time TIMESTAMP;
       ALTER TABLE parcels ADD COLUMN IF NOT EXISTS shipment_type VARCHAR(20) DEFAULT 'LAND';
+      ALTER TABLE parcels ADD COLUMN IF NOT EXISTS package_description TEXT;
     `);
 
     // 3. parcel_events table

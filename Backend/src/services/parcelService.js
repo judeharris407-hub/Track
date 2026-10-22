@@ -32,6 +32,7 @@ export const getParcelByTrackingNumber = async (trackingNumber) => {
       estimated_arrival_time,
       shipment_type,
       estimated_delivery,
+      package_description,
       created_at,
       updated_at
     FROM parcels
@@ -98,6 +99,8 @@ export const createParcel = async (parcelData, userId = null) => {
     route_history = null,
     departure_time = null,
     estimated_arrival_time = null,
+    package_description = null,
+    description = null,
     shipment_type = 'LAND',
     estimated_delivery,
     status = 'Parcel Received',
@@ -128,6 +131,7 @@ export const createParcel = async (parcelData, userId = null) => {
 
   const arrivalVal = estimated_arrival_time || estimated_delivery || null;
   const departureVal = departure_time || new Date().toISOString();
+  const finalPackageDesc = package_description || description || null;
 
   const insertParcelQuery = `
     INSERT INTO parcels (
@@ -152,8 +156,9 @@ export const createParcel = async (parcelData, userId = null) => {
       departure_time,
       estimated_arrival_time,
       shipment_type,
-      estimated_delivery
-    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
+      estimated_delivery,
+      package_description
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
     RETURNING *;
   `;
 
@@ -180,6 +185,7 @@ export const createParcel = async (parcelData, userId = null) => {
     arrivalVal,
     shipment_type || 'LAND',
     arrivalVal,
+    finalPackageDesc,
   ]);
 
   const newParcel = parcelResult.rows[0];
@@ -456,6 +462,7 @@ export const getAllParcels = async (limit = 50, offset = 0) => {
       p.estimated_arrival_time,
       p.shipment_type,
       p.estimated_delivery,
+      p.package_description,
       p.created_at,
       p.updated_at,
       COUNT(e.id) AS event_count

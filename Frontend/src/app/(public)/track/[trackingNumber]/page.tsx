@@ -70,6 +70,7 @@ interface Parcel {
   departure_time?: string | null;
   estimated_arrival_time?: string | null;
   estimated_delivery: string | null;
+  package_description?: string;
   created_at: string;
   updated_at: string;
   events: ParcelEvent[];
@@ -319,6 +320,28 @@ export default function TrackingDetailsPage() {
                 </span>
               </div>
             </div>
+
+            {/* Package & Consignment Description Highlight */}
+            {parcel.package_description && (
+              <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-blue-50/90 via-indigo-50/50 to-slate-50 border border-blue-100/90 shadow-xs text-left flex items-start gap-3.5">
+                <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                  <Package className="w-5 h-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-blue-700 font-mono">
+                      Consignment Specification
+                    </span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white text-slate-700 border border-slate-200 font-bold shadow-2xs">
+                      {parcel.shipment_type || 'LAND'}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-bold text-slate-800 mt-1 leading-relaxed">
+                    {parcel.package_description}
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* STRUCTURED SENDER & RECIPIENT INFORMATION CARDS */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
