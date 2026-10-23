@@ -198,15 +198,22 @@ const osrmCache = new Map<string, LatLng[]>();
 /**
  * Queries OSRM public routing API for highway driving paths (LAND shipments).
  * Falls back to direct straight line if the routing service is unavailable.
+ * Guarantees that the returned route path explicitly anchors at start and end coordinates without gaps.
  */
-export async function fetchOSRMRoute(start: LatLng, end: LatLng): Promise<LatLng[]> {
-  const cacheKey = `${start.lat.toFixed(4)},${start.lng.toFixed(4)}->${end.lat.toFixed(4)},${end.lng.toFixed(4)}`;
+export async function fetchOSRMRoute(start: LatLng, end: LatLng, waypoints?: LatLng[]): Promise<LatLng[]> {
+  const wpStr = Array.isArray(waypoints) && waypoints.length > 0
+    ? waypoints.map((w) => `${w.lat.toFixed(4)},${w.lng.toFixed(4)}`).join('|')
+    : '';
+  const cacheKey = `${start.lat.toFixed(4)},${start.lng.toFixed(4)}->[${wpStr}]->${end.lat.toFixed(4)},${end.lng.toFixed(4)}`;
   if (osrmCache.has(cacheKey)) {
     return osrmCache.get(cacheKey)!;
   }
 
   try {
-    const url = `https://router.project-osrm.org/route/v1/driving/${start.lng},${start.lat};${end.lng},${end.lat}?overview=full&geometries=geojson`;
+    const waypointsCoordString = Array.isArray(waypoints) && waypoints.length > 0
+      ? ';' + waypoints.map((w) => `${w.lng},${w.lat}`).join(';')
+      : '';
+    const url = `https://router.project-osrm.org/route/v1/driving/${start.lng},${start.lat}${waypointsCoordString};${end.lng},${end.lat}?overview=full&geometries=geojson`;
     const response = await fetch(url, { signal: AbortSignal.timeout(6000) });
     if (response.ok) {
       const data = await response.json();
@@ -214,7 +221,15 @@ export async function fetchOSRMRoute(start: LatLng, end: LatLng): Promise<LatLng
         const coords: LatLng[] = data.routes[0].geometry.coordinates.map(
           ([lng, lat]: [number, number]) => ({ lat, lng })
         );
-        if (coords.length > 1) {
+        if (coords.length > 0) {
+          // Prepend start coordinate if not strictly matching to eliminate marker gap
+          if (coords[0].lat !== start.lat || coords[0].lng !== start.lng) {
+            coords.unshift(start);
+          }
+          // Append end coordinate if not strictly matching to eliminate destination gap
+          if (coords[coords.length - 1].lat !== end.lat || coords[coords.length - 1].lng !== end.lng) {
+            coords.push(end);
+          }
           osrmCache.set(cacheKey, coords);
           return coords;
         }
@@ -225,7 +240,7 @@ export async function fetchOSRMRoute(start: LatLng, end: LatLng): Promise<LatLng
   }
 
   // Fallback: direct line with intermediate segments
-  const fallback = [start, end];
+  const fallback = [start, ...(Array.isArray(waypoints) ? waypoints : []), end];
   osrmCache.set(cacheKey, fallback);
   return fallback;
 }

@@ -108,19 +108,48 @@ export default function ParcelMap({
         mapInstanceRef.current = null;
       }
 
+      // Extract valid intermediate checkpoints from route_history
+      const validCheckpoints: LatLng[] = Array.isArray(route_history)
+        ? route_history
+            .filter((cp) => cp && cp.lat && cp.lng)
+            .map((cp) => ({ lat: Number(cp.lat), lng: Number(cp.lng) }))
+        : [];
+
       // Generate Route Polyline based on shipment type
       let fullRoutePath: LatLng[] = [];
 
       if (normalizedType === 'AIR' || normalizedType === 'SEA') {
         // Render curved great-circle arc for aviation and maritime transit
-        fullRoutePath = getGreatCircleArc(resolvedOrigin, resolvedDest, 70);
+        if (validCheckpoints.length > 0) {
+          const legs: LatLng[] = [resolvedOrigin, ...validCheckpoints, resolvedDest];
+          for (let i = 0; i < legs.length - 1; i++) {
+            const legArc = getGreatCircleArc(legs[i], legs[i + 1], Math.round(70 / (legs.length - 1)));
+            fullRoutePath.push(...(i === 0 ? legArc : legArc.slice(1)));
+          }
+        } else {
+          fullRoutePath = getGreatCircleArc(resolvedOrigin, resolvedDest, 70);
+        }
       } else {
         // Render highway routes using OSRM for land transit
         try {
-          fullRoutePath = await fetchOSRMRoute(resolvedOrigin, resolvedDest);
+          fullRoutePath = await fetchOSRMRoute(resolvedOrigin, resolvedDest, validCheckpoints);
         } catch {
-          fullRoutePath = [resolvedOrigin, resolvedDest];
+          fullRoutePath = [resolvedOrigin, ...validCheckpoints, resolvedDest];
         }
+      }
+
+      // Explicitly guarantee index 0 is resolvedOrigin and last index is resolvedDest
+      if (fullRoutePath.length === 0) {
+        fullRoutePath = [resolvedOrigin, resolvedDest];
+      }
+      if (fullRoutePath[0].lat !== resolvedOrigin.lat || fullRoutePath[0].lng !== resolvedOrigin.lng) {
+        fullRoutePath.unshift(resolvedOrigin);
+      }
+      if (
+        fullRoutePath[fullRoutePath.length - 1].lat !== resolvedDest.lat ||
+        fullRoutePath[fullRoutePath.length - 1].lng !== resolvedDest.lng
+      ) {
+        fullRoutePath.push(resolvedDest);
       }
 
       if (!isMounted || !mapContainerRef.current) return;
@@ -172,18 +201,18 @@ export default function ParcelMap({
       const originIcon = L.divIcon({
         className: 'custom-map-pin origin-pin',
         html: `
-          <div class="flex flex-col items-center group cursor-pointer" style="transform: translate(-50%, -100%);">
-            <span class="bg-indigo-950/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md whitespace-nowrap mb-1 border border-indigo-400/40">
+          <div class="flex flex-col items-center justify-end w-full h-full cursor-pointer select-none">
+            <span class="bg-indigo-950/95 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md whitespace-nowrap mb-1 border border-indigo-400/50">
               Origin
             </span>
-            <div class="w-8 h-8 rounded-full bg-indigo-600 border-2 border-white shadow-xl flex items-center justify-center text-white">
+            <div class="w-8 h-8 rounded-full bg-indigo-600 border-2 border-white shadow-xl flex items-center justify-center text-white shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M19 21v-4"/><path d="M19 17h2v-4h-2"/><path d="M19 13h2v-4h-2"/><path d="M19 9h2V5h-2"/><path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/><path d="M3 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
             </div>
-            <div class="w-1.5 h-1.5 bg-indigo-600 rounded-full mt-0.5"></div>
+            <div class="w-2 h-2 bg-indigo-600 rotate-45 -mt-1 border-r border-b border-white shrink-0"></div>
           </div>
         `,
-        iconSize: [32, 48],
-        iconAnchor: [16, 48],
+        iconSize: [64, 64],
+        iconAnchor: [32, 64],
       });
 
       const originMarker = L.marker(originCoord, { icon: originIcon }).addTo(map);
@@ -206,10 +235,8 @@ export default function ParcelMap({
             const cpIcon = L.divIcon({
               className: 'custom-map-pin checkpoint-pin',
               html: `
-                <div class="flex items-center justify-center cursor-pointer" style="transform: translate(-50%, -50%);">
-                  <div class="w-6 h-6 rounded-full bg-white border-2 border-blue-600 shadow-md flex items-center justify-center text-blue-700 text-[10px] font-black">
-                    ${index + 1}
-                  </div>
+                <div class="w-6 h-6 rounded-full bg-white border-2 border-blue-600 shadow-md flex items-center justify-center text-blue-700 text-[10px] font-black cursor-pointer select-none">
+                  ${index + 1}
                 </div>
               `,
               iconSize: [24, 24],
@@ -237,18 +264,18 @@ export default function ParcelMap({
       const destIcon = L.divIcon({
         className: 'custom-map-pin destination-pin',
         html: `
-          <div class="flex flex-col items-center group cursor-pointer" style="transform: translate(-50%, -100%);">
-            <span class="bg-emerald-950/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md whitespace-nowrap mb-1 border border-emerald-400/40">
+          <div class="flex flex-col items-center justify-end w-full h-full cursor-pointer select-none">
+            <span class="bg-emerald-950/95 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md whitespace-nowrap mb-1 border border-emerald-400/50">
               Destination
             </span>
-            <div class="w-8 h-8 rounded-full bg-emerald-600 border-2 border-white shadow-xl flex items-center justify-center text-white">
+            <div class="w-8 h-8 rounded-full bg-emerald-600 border-2 border-white shadow-xl flex items-center justify-center text-white shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
-            <div class="w-1.5 h-1.5 bg-emerald-600 rounded-full mt-0.5"></div>
+            <div class="w-2 h-2 bg-emerald-600 rotate-45 -mt-1 border-r border-b border-white shrink-0"></div>
           </div>
         `,
-        iconSize: [32, 48],
-        iconAnchor: [16, 48],
+        iconSize: [72, 64],
+        iconAnchor: [36, 64],
       });
 
       const destMarker = L.marker(destCoord, { icon: destIcon }).addTo(map);
@@ -274,15 +301,33 @@ export default function ParcelMap({
         }
       });
 
-      const traversedPoints: [number, number][] = fullRoutePath
-        .slice(0, closestIdx + 1)
-        .map((p) => [p.lat, p.lng] as [number, number]);
-      traversedPoints.push([effectiveCargoPos.lat, effectiveCargoPos.lng]);
+      // Construct continuous traversed line from true origin to cargo
+      let traversedPoints: [number, number][] = [];
+      if (isDelivered) {
+        traversedPoints = fullRoutePath.map((p) => [p.lat, p.lng] as [number, number]);
+      } else {
+        traversedPoints = [
+          [resolvedOrigin.lat, resolvedOrigin.lng],
+          ...fullRoutePath.slice(1, closestIdx + 1).map((p) => [p.lat, p.lng] as [number, number]),
+          [effectiveCargoPos.lat, effectiveCargoPos.lng],
+        ];
+      }
 
-      const remainingPoints: [number, number][] = [
-        [effectiveCargoPos.lat, effectiveCargoPos.lng],
-        ...fullRoutePath.slice(closestIdx + 1).map((p) => [p.lat, p.lng] as [number, number]),
-      ];
+      // Strict validation: index 0 MUST BE resolvedOrigin
+      if (
+        traversedPoints.length > 0 &&
+        (traversedPoints[0][0] !== resolvedOrigin.lat || traversedPoints[0][1] !== resolvedOrigin.lng)
+      ) {
+        traversedPoints.unshift([resolvedOrigin.lat, resolvedOrigin.lng]);
+      }
+
+      const remainingPoints: [number, number][] = isDelivered
+        ? []
+        : [
+            [effectiveCargoPos.lat, effectiveCargoPos.lng],
+            ...fullRoutePath.slice(closestIdx + 1).map((p) => [p.lat, p.lng] as [number, number]),
+            [resolvedDest.lat, resolvedDest.lng],
+          ];
 
       // Route styling theme based on shipment type
       const themeConfig = {
@@ -391,9 +436,9 @@ export default function ParcelMap({
       const cargoIcon = L.divIcon({
         className: 'custom-map-pin cargo-pin',
         html: `
-          <div class="flex flex-col items-center group cursor-pointer" style="transform: translate(-50%, -50%);">
+          <div class="flex flex-col items-center justify-center w-full h-full cursor-pointer select-none">
             <span class="${
-              isDelivered ? 'bg-emerald-600' : 'bg-slate-900/90'
+              isDelivered ? 'bg-emerald-600' : 'bg-slate-900/95'
             } text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow-xl whitespace-nowrap mb-1 border border-white/20 flex items-center gap-1.5 backdrop-blur-sm">
               <span class="w-1.5 h-1.5 rounded-full ${isDelivered ? 'bg-white' : 'bg-emerald-400'} animate-pulse"></span>
               <span>${isDelivered ? 'Delivered' : status}</span>
@@ -401,8 +446,8 @@ export default function ParcelMap({
             ${renderVehicleIconHtml()}
           </div>
         `,
-        iconSize: [48, 48],
-        iconAnchor: [24, 24],
+        iconSize: [120, 80],
+        iconAnchor: [60, 52],
       });
 
       const cargoMarker = L.marker(cargoCoord, { icon: cargoIcon, zIndexOffset: 1200 }).addTo(map);
